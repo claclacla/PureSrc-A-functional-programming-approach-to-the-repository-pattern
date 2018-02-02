@@ -161,7 +161,7 @@ A delivery request receives four required arguments:
 - the method options {object}
 - the data type {string}
 
-Furthemore it receives other optional parameters from the function returned by the `resourceRepository()` function. These parameters are helpful to add custom options to the request or to extend the resource address.
+Furthermore it receives other optional parameters from the function returned by the `resourceRepository()` function. These parameters are helpful to add custom options to the request or to extend the resource address.
 
 Internally it has to call the common `delivery()` function which executes the command.
 
