@@ -1,5 +1,6 @@
 import { stringToJson } from '../../lib/Json/'
 import PureSrcError from '../../errors/PureSrcError'
+import DeliveryError from '../../errors/DeliveryError'
 
 export const DATA_TYPE_JSON = "JSON";
 
@@ -11,6 +12,13 @@ export default async function fetchDeliveryMethod(address, options, dataType) {
     response = await fetch(address, options);
   } catch (error) {
     throw new PureSrcError(`Failed to connect to ${address}`);
+  }
+
+  if(!response.ok) {
+    throw new DeliveryError({
+      status: response.status,
+      message: response.statusText
+    });
   }
 
   switch (dataType) {
