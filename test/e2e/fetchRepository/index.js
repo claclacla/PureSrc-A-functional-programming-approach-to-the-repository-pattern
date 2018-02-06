@@ -40,6 +40,7 @@ let productDeleteRequest = productRepository(restDeleteRequest, fetchDeliveryDel
   try {
     await productInsertRequest(jsonToString(source));  
   } catch (error) {
+    console.log(error);
     console.log("Product insert error");
     return;
   }
