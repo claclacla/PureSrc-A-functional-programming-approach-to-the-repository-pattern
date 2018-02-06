@@ -32,10 +32,10 @@ mocha
 
 ```
 # Get the latest snapshot
-git clone https://github.com/claclacla/PureSrc-A-pure-functional-way-to-the-repository-pattern
+git clone https://github.com/claclacla/PureSrc-A-functional-programming-approach-to-the-repository-pattern
 
 # Change directory
-cd PureSrc-A-pure-functional-way-to-the-repository-pattern
+cd PureSrc-A-functional-programming-approach-to-the-repository-pattern
 
 # Install NPM dependencies
 npm i
@@ -51,25 +51,25 @@ npm i
 sudo docker pull node:9.2-slim
 
 # Change directory
-cd PureSrc-A-pure-functional-way-to-the-repository-pattern/test/api-server
+cd PureSrc-A-functional-programming-approach-to-the-repository-pattern/test/api-server
 
 # Create the api server container
 sudo docker build -t claclacla/pure-src-api-server .
 
 # Run the api server
-sudo docker run -d -v /write-your-absolute-path-to/PureSrc-A-pure-functional-way-to-the-repository-pattern/test/api-server:/usr/src/app -p 3000:3000 --name PureSrcApiServer claclacla/pure-src-api-server
+sudo docker run -d -v /write-your-absolute-path-to/PureSrc-A-functional-programming-approach-to-the-repository-pattern/test/api-server:/usr/src/app -p 3000:3000 --name PureSrcApiServer claclacla/pure-src-api-server
 
 # Change directory
-cd PureSrc-A-pure-functional-way-to-the-repository-pattern/test/web-server
+cd PureSrc-A-functional-programming-approach-to-the-repository-pattern/test/web-server
 
 # Build the local web server
 sudo docker build . -t claclacla/spa-http-server
 
 # Run the local web server
-sudo docker run -d -p 8080:8080 -v /write-your-absolute-path-to/PureSrc-A-pure-functional-way-to-the-repository-pattern/public:/usr/src/app --name PureSrcWebServer -it claclacla/spa-http-server
+sudo docker run -d -p 8080:8080 -v /write-your-absolute-path-to/PureSrc-A-functional-programming-approach-to-the-repository-pattern/public:/usr/src/app --name PureSrcWebServer -it claclacla/spa-http-server
 
 # Change directory
-cd PureSrc-A-pure-functional-way-to-the-repository-pattern
+cd PureSrc-A-functional-programming-approach-to-the-repository-pattern
 
 # Test if the api server is up and running 
 apiaddress=localhost:3000 mocha --ui tdd test/api-server/test/e2e/sources.js 

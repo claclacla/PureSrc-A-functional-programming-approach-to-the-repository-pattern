@@ -5,8 +5,8 @@ RUN npm install -g pm2
 RUN apt-get update \
   && apt-get install -y sudo
 
-RUN mkdir -p /usr/src/app
+#RUN mkdir -p /usr/src/app
 
 EXPOSE 3000
 
-CMD ["/usr/src/app/docker_init.sh"]
+#CMD ["/usr/src/app/docker_init.sh"]
