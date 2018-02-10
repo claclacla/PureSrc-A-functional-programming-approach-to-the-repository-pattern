@@ -78,7 +78,7 @@ export default async function fetchTest() {
   source.name = "LiquidSource";
 
   try {
-    await sourceUpdateRequest(source.uid, source);
+    await sourceUpdateRequest({ uid: source.uid }, source);
   } catch (error) {
     console.log("Product update error");
     return;
@@ -87,7 +87,7 @@ export default async function fetchTest() {
   // Delete a source by uid
 
   try {
-    await sourceDeleteRequest(source.uid);
+    await sourceDeleteRequest({ uid: source.uid });
   } catch (error) {
     console.log("Product delete error");
     return;

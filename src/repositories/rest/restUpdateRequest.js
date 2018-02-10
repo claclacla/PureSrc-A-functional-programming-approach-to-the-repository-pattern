@@ -1,9 +1,9 @@
 import { jsonToString } from '../../lib/Json/';
 import restDelivery from './restDelivery';
 
-export default async function restUpdateRequest(deliveryMethod, source, options, mapFromSource, mapToSource, uid, object) {
-  if (uid) {
-    source += "/" + uid;
+export default async function restUpdateRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query, object) {
+  if (query.uid) {
+    source += "/" + query.uid;
   }
 
   let srcObject = mapToSource(object);
