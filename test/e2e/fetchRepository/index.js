@@ -45,7 +45,7 @@ export default async function fetchTest() {
   let source = new Source({ name: "PureSource" });
 
   try {
-    console.log(await sourceInsertRequest(source));
+    await sourceInsertRequest(source);
   } catch (error) {
     console.log("Product insert error");
     return;
@@ -64,25 +64,25 @@ export default async function fetchTest() {
 
   // Retrieve a source by uid
 
-  // source = sources[0];
+  source = sources[0];
 
-  // try {
-  //   await sourceGetByUidRequest(source.uid);
-  // } catch (error) {
-  //   console.log("Product retrieve error");
-  //   return;
-  // }
+  try {
+    await sourceGetByUidRequest(source.uid);
+  } catch (error) {
+    console.log("Product retrieve error");
+    return;
+  }
 
-  // // Update a source by uid
+  // Update a source by uid
 
-  // source.name = "LiquidSource";
+  source.name = "LiquidSource";
 
-  // try {
-  //   await sourceUpdateRequest(source.uid, jsonToString(source));
-  // } catch (error) {
-  //   console.log("Product update error");
-  //   return;
-  // }
+  try {
+    await sourceUpdateRequest(source.uid, source);
+  } catch (error) {
+    console.log("Product update error");
+    return;
+  }
 
   // // Delete a source by uid
 
