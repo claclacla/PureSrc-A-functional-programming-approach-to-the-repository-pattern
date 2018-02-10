@@ -5,7 +5,10 @@ export default async function restGetByUidRequest(deliveryMethod, source, option
     source += "/" + uid;
   }
 
-  let data = await restDelivery(deliveryMethod, source, options);
+  let restResponse = await restDelivery(deliveryMethod, source, options);
 
-  return data;
+  let srcObject = restResponse.body.data;
+  let object = mapFromSource(srcObject);
+
+  return object;
 }

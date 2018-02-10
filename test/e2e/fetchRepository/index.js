@@ -62,16 +62,16 @@ export default async function fetchTest() {
     return;
   }
 
-  // // Retrieve a source by uid
+  // Retrieve a source by uid
 
-  // source = sources[0];
+  source = sources[0];
 
-  // try {
-  //   await sourceGetByUidRequest(source.uid);
-  // } catch (error) {
-  //   console.log("Product retrieve error");
-  //   return;
-  // }
+  try {
+    await sourceGetByUidRequest(source.uid);
+  } catch (error) {
+    console.log("Product retrieve error");
+    return;
+  }
 
   // // Update a source by uid
 
