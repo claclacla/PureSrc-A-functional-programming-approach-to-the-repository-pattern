@@ -1,4 +1,4 @@
-import UID from '../../lib/uid/UID';
+import UID from '../lib/uid/UID';
 
 import SourceDTO from '../dtos/SourceDTO';
 import Source from '../entities/Source';

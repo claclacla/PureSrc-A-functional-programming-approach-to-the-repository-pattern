@@ -11,10 +11,10 @@ import inMemoryJsonDBDeleteRequest from '../../../src/repositories/inMemoryJsonD
 
 import UID from '../lib/uid/UID';
 
-import Source from './entities/Source';
-import SourceDTO from './dtos/SourceDTO';
-import mapSourceDTOToSource from './mapToEntities/mapSourceDTOToSource';
-import mapSourceToSourceDTO from './mapToDtos/mapSourceToSourceDTO';
+import Source from '../entities/Source';
+import SourceDTO from '../dtos/SourceDTO';
+import mapSourceDTOToSource from '../mapToEntities/mapSourceDTOToSource';
+import mapSourceToSourceDTO from '../mapToDtos/mapSourceToSourceDTO';
 
 // Create the repository
 
@@ -47,7 +47,7 @@ export default async function foreRunnerDBTest() {
 
   // Insert a new Source
 
-  let source = new Source({ name: "Source" });
+  let source = new Source({ name: "PureSource" });
 
   try {
     await sourceInsertRequest(source); // TODO: remove inMemoryJsonDBToString() in fetchRepository()  
