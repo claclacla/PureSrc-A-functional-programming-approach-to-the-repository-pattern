@@ -1,9 +1,9 @@
-export default function createPureSrc(address, deliveryMethod, dataType) {
+export default function createPureSrc(source, deliveryMethod, dataType) {
   return function (deliveryRequest, options) {
     return async function (...requestParameters) {
       let data = await deliveryRequest(
         deliveryMethod,
-        address,
+        source,
         options,
         dataType,
         ...requestParameters

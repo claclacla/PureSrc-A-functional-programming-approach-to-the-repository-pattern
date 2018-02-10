@@ -1,7 +1,7 @@
 import delivery from '../../delivery';
 
-export default async function jsonGetRequest(deliveryMethod, address, options, dataType, query) {
-  let collection = await deliveryMethod(address, options, dataType);
+export default async function jsonGetRequest(deliveryMethod, source, options, dataType, query) {
+  let collection = await deliveryMethod(source, options, dataType);
   let collectionData = collection.find(query);
 
   let data = [];

@@ -1,9 +1,9 @@
 import delivery from '../../delivery';
 
-export default async function restInsertRequest(deliveryMethod, address, options, dataType, body) {
+export default async function restInsertRequest(deliveryMethod, source, options, dataType, body) {
   options.body = body;
 
-  let data = await delivery(deliveryMethod, address, options, dataType);
+  let data = await delivery(deliveryMethod, source, options, dataType);
 
   return data;
 }

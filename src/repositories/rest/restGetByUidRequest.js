@@ -1,11 +1,11 @@
 import delivery from '../../delivery';
 
-export default async function restGetByUidRequest(deliveryMethod, address, options, dataType, uid) {
+export default async function restGetByUidRequest(deliveryMethod, source, options, dataType, uid) {
   if (uid) {
-    address += "/" + uid;
+    source += "/" + uid;
   }
 
-  let data = await delivery(deliveryMethod, address, options, dataType);
+  let data = await delivery(deliveryMethod, source, options, dataType);
 
   return data;
 }

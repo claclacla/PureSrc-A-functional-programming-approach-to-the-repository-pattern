@@ -4,14 +4,14 @@ import DeliveryError from '../../errors/DeliveryError'
 
 export const DATA_TYPE_JSON = "JSON";
 
-export default async function fetchDeliveryMethod(address, options, dataType) {
+export default async function fetchDeliveryMethod(source, options, dataType) {
   let data = null;
   let response = null;
 
   try {
-    response = await fetch(address, options);
+    response = await fetch(source, options);
   } catch (error) {
-    throw new PureSrcError(`Failed to connect to ${address}`);
+    throw new PureSrcError(`Failed to connect to ${source}`);
   }
 
   if(!response.ok) {

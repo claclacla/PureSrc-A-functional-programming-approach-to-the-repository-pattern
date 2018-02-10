@@ -1,7 +1,7 @@
 import delivery from '../../delivery';
 
-export default async function jsonInsertRequest(deliveryMethod, address, options, dataType, object) {
-  let collection = await deliveryMethod(address, options, dataType);
+export default async function jsonInsertRequest(deliveryMethod, source, options, dataType, object) {
+  let collection = await deliveryMethod(source, options, dataType);
   collection.insert(object);
   
   return new Promise((resolve, reject) => {
