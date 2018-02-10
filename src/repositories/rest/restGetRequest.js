@@ -5,7 +5,7 @@ export default async function restGetRequest(deliveryMethod, source, options, ma
     source += "?" + query;
   }
 
-  let data = await restDelivery(deliveryMethod, source, options);
+  let response = await restDelivery(deliveryMethod, source, options);
 
   return data;
 }

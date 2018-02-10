@@ -50,7 +50,7 @@ export default async function foreRunnerDBTest() {
   let source = new Source({ name: "PureSource" });
 
   try {
-    await sourceInsertRequest(source); // TODO: remove inMemoryJsonDBToString() in fetchRepository()  
+    await sourceInsertRequest(source); 
   } catch (error) {
     console.log("Product insert error");
     return;
@@ -83,7 +83,7 @@ export default async function foreRunnerDBTest() {
   source.name = "LiquidSource";
 
   try {
-    await sourceUpdateRequest({ uid: source.uid }, source); // TODO: remove inMemoryJsonDBToString() in fetchRepository()   
+    await sourceUpdateRequest({ uid: source.uid }, source); 
   } catch (error) {
     console.log("Product update error");
     return;
