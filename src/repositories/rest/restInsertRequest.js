@@ -9,7 +9,9 @@ export default async function restInsertRequest(deliveryMethod, source, options,
   };
   options.body = jsonToString(body);
 
-  let data = await restDelivery(deliveryMethod, source, options);
+  // TODO: check restDelivery type
 
-  return data;
+  let restResponse = await restDelivery(deliveryMethod, source, options);
+
+  return restResponse.body.data;
 }

@@ -5,6 +5,8 @@ export default async function restGetRequest(deliveryMethod, source, options, ma
     source += "?" + query;
   }
 
+  // TODO: check restDelivery type
+
   let restResponse = await restDelivery(deliveryMethod, source, options);
 
   let srcObjects = restResponse.body.data;

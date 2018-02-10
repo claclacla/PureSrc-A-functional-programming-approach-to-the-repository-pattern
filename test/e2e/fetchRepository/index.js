@@ -45,7 +45,7 @@ export default async function fetchTest() {
   let source = new Source({ name: "PureSource" });
 
   try {
-    await sourceInsertRequest(source);
+    console.log(await sourceInsertRequest(source));
   } catch (error) {
     console.log("Product insert error");
     return;
@@ -64,14 +64,14 @@ export default async function fetchTest() {
 
   // Retrieve a source by uid
 
-  source = sources[0];
+  // source = sources[0];
 
-  try {
-    await sourceGetByUidRequest(source.uid);
-  } catch (error) {
-    console.log("Product retrieve error");
-    return;
-  }
+  // try {
+  //   await sourceGetByUidRequest(source.uid);
+  // } catch (error) {
+  //   console.log("Product retrieve error");
+  //   return;
+  // }
 
   // // Update a source by uid
 
