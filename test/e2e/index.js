@@ -1,5 +1,7 @@
+import fetchTest from './fetchRepository/'
 import foreRunnerDBTest from './foreRunnerDBRepository/'
 
 (async () => {
-  foreRunnerDBTest();
+  await fetchTest();
+  await foreRunnerDBTest();
 })();

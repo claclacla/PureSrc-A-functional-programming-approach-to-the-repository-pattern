@@ -31,7 +31,7 @@ let productInsertRequest = productRepository(restInsertRequest, fetchDeliveryPos
 let productUpdateRequest = productRepository(restUpdateRequest, fetchDeliveryPutOptions(jsonHeaders()));
 let productDeleteRequest = productRepository(restDeleteRequest, fetchDeliveryDeleteOptions());
 
-(async () => {
+export default async function fetchTest() {
 
   // Insert a new Source
 
@@ -86,4 +86,4 @@ let productDeleteRequest = productRepository(restDeleteRequest, fetchDeliveryDel
     console.log("Product delete error");
     return;
   }
-})();
+}
