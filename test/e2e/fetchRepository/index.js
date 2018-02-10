@@ -77,16 +77,12 @@ export default async function fetchTest() {
 
   source.name = "LiquidSource";
 
-  console.log(await sourceGetRequest(''));
-
   try {
     await sourceUpdateRequest(source.uid, source);
   } catch (error) {
     console.log("Product update error");
     return;
   }
-
-  console.log(await sourceGetRequest(''));
 
   // Delete a source by uid
 
@@ -96,6 +92,4 @@ export default async function fetchTest() {
     console.log("Product delete error");
     return;
   }
-
-  console.log(await sourceGetRequest(''));
 }
