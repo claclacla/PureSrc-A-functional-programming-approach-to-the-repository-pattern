@@ -1,7 +1,7 @@
 import ForeRunnerDB from 'forerunnerdb'
 import createPureSrc from '../../../src/createPureSrc'
 
-import foreRunnerDBDeliveryMethod, { DATA_TYPE_JSON } from '../../../src/deliveryMethods/ForeRunnerDB/foreRunnerDBDeliveryMethod'
+import foreRunnerDBDeliveryMethod from '../../../src/deliveryMethods/ForeRunnerDB/foreRunnerDBDeliveryMethod'
 
 // import fetchDeliveryGetOptions from '../../../src/deliveryMethods/fetch/options/fetchDeliveryGetOptions'
 // import fetchDeliveryPostOptions from '../../../src/deliveryMethods/fetch/options/fetchDeliveryPostOptions'
@@ -30,7 +30,7 @@ db.persist.driver("LocalStorage");
 
 // db.collection("Product").insert(sources);
 
-let sourceRepository = createPureSrc(db.collection("Source"), foreRunnerDBDeliveryMethod, DATA_TYPE_JSON);
+let sourceRepository = createPureSrc(db.collection("Source"), foreRunnerDBDeliveryMethod);
 
 // Create the repository methods
 
@@ -47,7 +47,7 @@ export default async function foreRunnerDBTest() {
   let source = new Source("Source");
 
   try {
-    await sourceInsertRequest(source); // TODO: jsonToString()  
+    await sourceInsertRequest(source); // TODO: remove jsonToString() in fetchRepository()  
   } catch (error) {
     console.log("Product insert error");
     return;

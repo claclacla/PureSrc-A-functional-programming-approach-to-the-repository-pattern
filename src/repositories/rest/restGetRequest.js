@@ -1,11 +1,11 @@
 import delivery from '../../delivery';
 
-export default async function restGetRequest(deliveryMethod, source, options, dataType, query) {
+export default async function restGetRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query) {
   if (query) {
     source += "?" + query;
   }
 
-  let data = await delivery(deliveryMethod, source, options, dataType);
+  let data = await delivery(deliveryMethod, source, options, mapFromSource, mapToSource);
 
   return data;
 }

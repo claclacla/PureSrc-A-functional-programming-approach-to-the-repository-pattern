@@ -1,6 +1,6 @@
 import createPureSrc from '../../../src/createPureSrc'
 
-import fetchDeliveryMethod, { DATA_TYPE_JSON } from '../../../src/deliveryMethods/fetch/fetchDeliveryMethod'
+import fetchDeliveryMethod from '../../../src/deliveryMethods/fetch/fetchDeliveryMethod'
 
 import jsonHeaders from '../../../src/deliveryMethods/fetch/headers/jsonHeaders'
 import fetchDeliveryGetOptions from '../../../src/deliveryMethods/fetch/options/fetchDeliveryGetOptions'
@@ -21,7 +21,7 @@ const API_ADDRESS = "http://localhost:3000";
 
 // Create the repository
 
-let sourceRepository = createPureSrc(`${API_ADDRESS}/sources`, fetchDeliveryMethod, DATA_TYPE_JSON);
+let sourceRepository = createPureSrc(`${API_ADDRESS}/sources`, fetchDeliveryMethod);
 
 // Create the repository methods
 
