@@ -45,9 +45,8 @@ export default async function fetchTest() {
   let source = new Source({ name: "PureSource" });
 
   try {
-    await sourceInsertRequest(jsonToString(source));
+    await sourceInsertRequest(source);
   } catch (error) {
-    console.log(error);
     console.log("Product insert error");
     return;
   }
