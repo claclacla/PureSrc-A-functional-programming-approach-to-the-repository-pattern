@@ -77,6 +77,8 @@ export default async function fetchTest() {
 
   source.name = "LiquidSource";
 
+  console.log(await sourceGetRequest(''));
+
   try {
     await sourceUpdateRequest(source.uid, source);
   } catch (error) {
@@ -84,12 +86,16 @@ export default async function fetchTest() {
     return;
   }
 
-  // // Delete a source by uid
+  console.log(await sourceGetRequest(''));
 
-  // try {
-  //   await sourceDeleteRequest(source.uid);
-  // } catch (error) {
-  //   console.log("Product delete error");
-  //   return;
-  // }
+  // Delete a source by uid
+
+  try {
+    await sourceDeleteRequest(source.uid);
+  } catch (error) {
+    console.log("Product delete error");
+    return;
+  }
+
+  console.log(await sourceGetRequest(''));
 }
