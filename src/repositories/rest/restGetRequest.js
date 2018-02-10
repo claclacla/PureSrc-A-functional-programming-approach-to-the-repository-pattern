@@ -5,7 +5,16 @@ export default async function restGetRequest(deliveryMethod, source, options, ma
     source += "?" + query;
   }
 
-  let response = await restDelivery(deliveryMethod, source, options);
+  let restResponse = await restDelivery(deliveryMethod, source, options);
 
-  return data;
+  let srcObjects = restResponse.body.data;
+  let object = {};
+  let responseObjects = [];
+
+  srcObjects.forEach(srcObject => {
+    object = mapFromSource(srcObject);
+    responseObjects.push(object);
+  });
+
+  return responseObjects;
 }

@@ -64,7 +64,7 @@ export default async function fetchTest() {
 
   // Retrieve a source by uid
 
-  source = sources.body.data[0];
+  source = sources[0];
 
   try {
     await sourceGetByUidRequest(source.uid);
