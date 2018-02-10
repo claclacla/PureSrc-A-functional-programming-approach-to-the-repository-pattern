@@ -1,6 +1,6 @@
 // TODO: Add support for filters with validation
 
-export default async function jsonGetRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query) {
+export default async function inMemoryJsonDBGetRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query) {
   let collection = await deliveryMethod(source, options, mapFromSource, mapToSource);
   let srcObjects = collection.find(query);
 

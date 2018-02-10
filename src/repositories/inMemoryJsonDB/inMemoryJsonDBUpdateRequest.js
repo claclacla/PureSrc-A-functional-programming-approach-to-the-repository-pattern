@@ -1,4 +1,4 @@
-export default async function jsonUpdateRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query, object) {
+export default async function inMemoryJsonDBUpdateRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query, object) {
   let srcObject = mapToSource(object);
 
   let collection = await deliveryMethod(source, options, mapFromSource, mapToSource);

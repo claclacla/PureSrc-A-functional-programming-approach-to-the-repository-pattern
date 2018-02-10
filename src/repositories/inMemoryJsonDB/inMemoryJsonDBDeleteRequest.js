@@ -1,4 +1,4 @@
-export default async function jsonDeleteRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query) {
+export default async function inMemoryJsonDBDeleteRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query) {
   let collection = await deliveryMethod(source, options, mapFromSource, mapToSource);
   collection.remove(query);
   

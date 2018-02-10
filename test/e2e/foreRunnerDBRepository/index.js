@@ -3,11 +3,11 @@ import createPureSrc from '../../../src/createPureSrc'
 
 import foreRunnerDBDeliveryMethod from '../../../src/deliveryMethods/ForeRunnerDB/foreRunnerDBDeliveryMethod'
 
-import jsonGetRequest from '../../../src/repositories/json/jsonGetRequest'
-import jsonGetByUidRequest from '../../../src/repositories/json/jsonGetByUidRequest'
-import jsonInsertRequest from '../../../src/repositories/json/jsonInsertRequest'
-import jsonUpdateRequest from '../../../src/repositories/json/jsonUpdateRequest'
-import jsonDeleteRequest from '../../../src/repositories/json/jsonDeleteRequest'
+import inMemoryJsonDBGetRequest from '../../../src/repositories/inMemoryJsonDB/inMemoryJsonDBGetRequest'
+import inMemoryJsonDBGetByUidRequest from '../../../src/repositories/inMemoryJsonDB/inMemoryJsonDBGetByUidRequest'
+import inMemoryJsonDBInsertRequest from '../../../src/repositories/inMemoryJsonDB/inMemoryJsonDBInsertRequest'
+import inMemoryJsonDBUpdateRequest from '../../../src/repositories/inMemoryJsonDB/inMemoryJsonDBUpdateRequest'
+import inMemoryJsonDBDeleteRequest from '../../../src/repositories/inMemoryJsonDB/inMemoryJsonDBDeleteRequest'
 
 import UID from '../lib/uid/UID';
 
@@ -37,11 +37,11 @@ let sourceRepository = createPureSrc(
 
 // Create the repository methods
 
-let sourceGetRequest = sourceRepository(jsonGetRequest);
-let sourceGetByUidRequest = sourceRepository(jsonGetByUidRequest);
-let sourceInsertRequest = sourceRepository(jsonInsertRequest);
-let sourceUpdateRequest = sourceRepository(jsonUpdateRequest);
-let sourceDeleteRequest = sourceRepository(jsonDeleteRequest);
+let sourceGetRequest = sourceRepository(inMemoryJsonDBGetRequest);
+let sourceGetByUidRequest = sourceRepository(inMemoryJsonDBGetByUidRequest);
+let sourceInsertRequest = sourceRepository(inMemoryJsonDBInsertRequest);
+let sourceUpdateRequest = sourceRepository(inMemoryJsonDBUpdateRequest);
+let sourceDeleteRequest = sourceRepository(inMemoryJsonDBDeleteRequest);
 
 export default async function foreRunnerDBTest() {
 
@@ -50,7 +50,7 @@ export default async function foreRunnerDBTest() {
   let source = new Source({ name: "Source" });
 
   try {
-    await sourceInsertRequest(source); // TODO: remove jsonToString() in fetchRepository()  
+    await sourceInsertRequest(source); // TODO: remove inMemoryJsonDBToString() in fetchRepository()  
   } catch (error) {
     console.log("Product insert error");
     return;
@@ -83,7 +83,7 @@ export default async function foreRunnerDBTest() {
   source.name = "LiquidSource";
 
   try {
-    await sourceUpdateRequest({ uid: source.uid }, source); // TODO: remove jsonToString() in fetchRepository()   
+    await sourceUpdateRequest({ uid: source.uid }, source); // TODO: remove inMemoryJsonDBToString() in fetchRepository()   
   } catch (error) {
     console.log("Product update error");
     return;

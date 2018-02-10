@@ -1,4 +1,4 @@
-export default async function jsonGetByUidRequest(deliveryMethod, source, options, mapFromSource, mapToSource, uid) {
+export default async function inMemoryJsonDBGetByUidRequest(deliveryMethod, source, options, mapFromSource, mapToSource, uid) {
   let collection = await deliveryMethod(source, options, mapFromSource, mapToSource);
   let srcObjects = collection.find({ uid });
 

@@ -1,4 +1,4 @@
-export default async function jsonInsertRequest(deliveryMethod, source, options, mapFromSource, mapToSource, object) {
+export default async function inMemoryJsonDBInsertRequest(deliveryMethod, source, options, mapFromSource, mapToSource, object) {
   let srcObject = mapToSource(object);
 
   let collection = await deliveryMethod(source, options, mapFromSource, mapToSource);
