@@ -2,7 +2,7 @@ import { stringToJson } from '../../lib/Json/'
 import PureSrcError from '../../errors/PureSrcError'
 import DeliveryError from '../../errors/DeliveryError'
 
-export default async function fetchDeliveryMethod(source, options, mapFromSource, mapToSource) {
+export default async function fetchDeliveryMethod(source, options) {
   let data = null;
   let response = null;
 

@@ -5,7 +5,7 @@ export default async function restGetByUidRequest(deliveryMethod, source, option
     source += "/" + uid;
   }
 
-  let data = await restDelivery(deliveryMethod, source, options, mapFromSource, mapToSource);
+  let data = await restDelivery(deliveryMethod, source, options);
 
   return data;
 }

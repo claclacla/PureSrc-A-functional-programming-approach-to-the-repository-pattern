@@ -14,14 +14,21 @@ import restInsertRequest from '../../../src/repositories/rest/restInsertRequest'
 import restUpdateRequest from '../../../src/repositories/rest/restUpdateRequest'
 import restDeleteRequest from '../../../src/repositories/rest/restDeleteRequest'
 
-import Source from './dtos/Source'
+import Source from '../entities/Source';
+import mapSourceDTOToSource from '../mapToEntities/mapSourceDTOToSource';
+import mapSourceToSourceDTO from '../mapToDtos/mapSourceToSourceDTO';
+
 import { jsonToString } from '../../../src/lib/Json'
 
 const API_ADDRESS = "http://localhost:3000";
 
 // Create the repository
 
-let sourceRepository = createPureSrc(`${API_ADDRESS}/sources`, fetchDeliveryMethod);
+let sourceRepository = createPureSrc(
+  `${API_ADDRESS}/sources`,
+  fetchDeliveryMethod,
+  mapSourceDTOToSource,
+  mapSourceToSourceDTO);
 
 // Create the repository methods
 
@@ -35,10 +42,10 @@ export default async function fetchTest() {
 
   // Insert a new Source
 
-  let source = new Source("PureSource");
+  let source = new Source({ name: "PureSource" });
 
   try {
-    await sourceInsertRequest(jsonToString(source));  
+    await sourceInsertRequest(jsonToString(source));
   } catch (error) {
     console.log(error);
     console.log("Product insert error");
@@ -48,12 +55,12 @@ export default async function fetchTest() {
   // Retrieve all the sources
 
   let sources = null;
-  
+
   try {
-    sources = await sourceGetRequest('');    
+    sources = await sourceGetRequest('');
   } catch (error) {
-   console.log("Products retrieve error"); 
-   return;
+    console.log("Products retrieve error");
+    return;
   }
 
   // Retrieve a source by uid
@@ -61,10 +68,10 @@ export default async function fetchTest() {
   source = sources.data[0];
 
   try {
-    await sourceGetByUidRequest(source.uid);    
+    await sourceGetByUidRequest(source.uid);
   } catch (error) {
-   console.log("Product retrieve error"); 
-   return;
+    console.log("Product retrieve error");
+    return;
   }
 
   // Update a source by uid
@@ -72,7 +79,7 @@ export default async function fetchTest() {
   source.name = "LiquidSource";
 
   try {
-    await sourceUpdateRequest(source.uid, jsonToString(source)); 
+    await sourceUpdateRequest(source.uid, jsonToString(source));
   } catch (error) {
     console.log("Product update error");
     return;
@@ -81,7 +88,7 @@ export default async function fetchTest() {
   // Delete a source by uid
 
   try {
-    await sourceDeleteRequest(source.uid); 
+    await sourceDeleteRequest(source.uid);
   } catch (error) {
     console.log("Product delete error");
     return;

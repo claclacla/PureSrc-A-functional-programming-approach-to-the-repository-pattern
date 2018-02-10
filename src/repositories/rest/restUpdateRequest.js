@@ -7,7 +7,7 @@ export default async function restUpdateRequest(deliveryMethod, source, options,
 
   options.body = body;
 
-  let data = await restDelivery(deliveryMethod, source, options, mapFromSource, mapToSource);
+  let data = await restDelivery(deliveryMethod, source, options);
 
   return data;
 }
