@@ -7,7 +7,7 @@ import jsonGetRequest from '../../../src/repositories/json/jsonGetRequest'
 import jsonGetByUidRequest from '../../../src/repositories/json/jsonGetByUidRequest'
 import jsonInsertRequest from '../../../src/repositories/json/jsonInsertRequest'
 import jsonUpdateRequest from '../../../src/repositories/json/jsonUpdateRequest'
-// import jsonDeleteRequest from '../../../src/repositories/json/jsonDeleteRequest'
+import jsonDeleteRequest from '../../../src/repositories/json/jsonDeleteRequest'
 
 import UID from '../lib/uid/UID';
 
@@ -41,7 +41,7 @@ let sourceGetRequest = sourceRepository(jsonGetRequest);
 let sourceGetByUidRequest = sourceRepository(jsonGetByUidRequest);
 let sourceInsertRequest = sourceRepository(jsonInsertRequest);
 let sourceUpdateRequest = sourceRepository(jsonUpdateRequest);
-// let sourceDeleteRequest = sourceRepository(jsonDeleteRequest, fetchDeliveryDeleteOptions());
+let sourceDeleteRequest = sourceRepository(jsonDeleteRequest);
 
 export default async function foreRunnerDBTest() {
 
@@ -89,12 +89,12 @@ export default async function foreRunnerDBTest() {
     return;
   }
 
-  // // Delete a source by uid
+  // Delete a source by uid
 
-  // try {
-  //   await sourceDeleteRequest(source.uid); 
-  // } catch (error) {
-  //   console.log("Product delete error");
-  //   return;
-  // }
+  try {
+    await sourceDeleteRequest({ uid: source.uid });
+  } catch (error) {
+    console.log("Product delete error");
+    return;
+  }
 }
