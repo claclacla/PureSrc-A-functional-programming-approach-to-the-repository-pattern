@@ -1,4 +1,4 @@
-import delivery from '../../delivery';
+import restDelivery from './restDelivery';
 
 export default async function restUpdateRequest(deliveryMethod, source, options, mapFromSource, mapToSource, uid, body) {
   if (uid) {
@@ -7,7 +7,7 @@ export default async function restUpdateRequest(deliveryMethod, source, options,
 
   options.body = body;
 
-  let data = await delivery(deliveryMethod, source, options, mapFromSource, mapToSource);
+  let data = await restDelivery(deliveryMethod, source, options, mapFromSource, mapToSource);
 
   return data;
 }
