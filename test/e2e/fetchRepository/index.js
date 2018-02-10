@@ -62,34 +62,34 @@ export default async function fetchTest() {
     return;
   }
 
-  // Retrieve a source by uid
+  // // Retrieve a source by uid
 
-  source = sources[0];
+  // source = sources[0];
 
-  try {
-    await sourceGetByUidRequest(source.uid);
-  } catch (error) {
-    console.log("Product retrieve error");
-    return;
-  }
+  // try {
+  //   await sourceGetByUidRequest(source.uid);
+  // } catch (error) {
+  //   console.log("Product retrieve error");
+  //   return;
+  // }
 
-  // Update a source by uid
+  // // Update a source by uid
 
-  source.name = "LiquidSource";
+  // source.name = "LiquidSource";
 
-  try {
-    await sourceUpdateRequest(source.uid, jsonToString(source));
-  } catch (error) {
-    console.log("Product update error");
-    return;
-  }
+  // try {
+  //   await sourceUpdateRequest(source.uid, jsonToString(source));
+  // } catch (error) {
+  //   console.log("Product update error");
+  //   return;
+  // }
 
-  // Delete a source by uid
+  // // Delete a source by uid
 
-  try {
-    await sourceDeleteRequest(source.uid);
-  } catch (error) {
-    console.log("Product delete error");
-    return;
-  }
+  // try {
+  //   await sourceDeleteRequest(source.uid);
+  // } catch (error) {
+  //   console.log("Product delete error");
+  //   return;
+  // }
 }

@@ -16,8 +16,10 @@ router
     });
   })
   .post('/', function (req, res, next) {
+    let sourceDto = req.body.data;
+
     let uid = UID.create();
-    let source = new Source(uid, req.body.name);
+    let source = new Source(uid, sourceDto.name);
 
     sources.push(source);
 
@@ -35,11 +37,13 @@ router
   })
   .put('/:uid', function (req, res, next) {
     let uid = req.params.uid;
+    let sourceDto = req.body.data;
+
     let resSource = null;
 
     sources = sources.map(source => {
       if (source.uid === uid) {
-        source = req.body;
+        source = sourceDto;
         resSource = source;
       }
 
