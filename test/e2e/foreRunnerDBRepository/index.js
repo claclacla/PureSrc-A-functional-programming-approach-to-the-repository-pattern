@@ -6,8 +6,8 @@ import foreRunnerDBDeliveryMethod from '../../../src/deliveryMethods/ForeRunnerD
 import jsonGetRequest from '../../../src/repositories/json/jsonGetRequest'
 import jsonGetByUidRequest from '../../../src/repositories/json/jsonGetByUidRequest'
 import jsonInsertRequest from '../../../src/repositories/json/jsonInsertRequest'
-// import restUpdateRequest from '../../../src/repositories/rest/restUpdateRequest'
-// import restDeleteRequest from '../../../src/repositories/rest/restDeleteRequest'
+import jsonUpdateRequest from '../../../src/repositories/json/jsonUpdateRequest'
+// import jsonDeleteRequest from '../../../src/repositories/json/jsonDeleteRequest'
 
 import UID from '../lib/uid/UID';
 
@@ -40,14 +40,14 @@ let sourceRepository = createPureSrc(
 let sourceGetRequest = sourceRepository(jsonGetRequest);
 let sourceGetByUidRequest = sourceRepository(jsonGetByUidRequest);
 let sourceInsertRequest = sourceRepository(jsonInsertRequest);
-// let sourceUpdateRequest = sourceRepository(restUpdateRequest, fetchDeliveryPutOptions(jsonHeaders()));
-// let sourceDeleteRequest = sourceRepository(restDeleteRequest, fetchDeliveryDeleteOptions());
+let sourceUpdateRequest = sourceRepository(jsonUpdateRequest);
+// let sourceDeleteRequest = sourceRepository(jsonDeleteRequest, fetchDeliveryDeleteOptions());
 
 export default async function foreRunnerDBTest() {
 
   // Insert a new Source
 
-  let source = new Source("Source");
+  let source = new Source({ name: "Source" });
 
   try {
     await sourceInsertRequest(source); // TODO: remove jsonToString() in fetchRepository()  
@@ -62,13 +62,12 @@ export default async function foreRunnerDBTest() {
 
   try {
     sources = await sourceGetRequest('');
-    console.log(sources);
   } catch (error) {
     console.log("Products retrieve error");
     return;
   }
 
-  // // Retrieve a source by uid
+  // Retrieve a source by uid
 
   source = sources[0];
 
@@ -79,16 +78,16 @@ export default async function foreRunnerDBTest() {
     return;
   }
 
-  // // Update a source by uid
+  // Update a source by uid
 
-  // source.name = "LiquidSource";
+  source.name = "LiquidSource";
 
-  // try {
-  //   await sourceUpdateRequest(source.uid, jsonToString(source)); 
-  // } catch (error) {
-  //   console.log("Product update error");
-  //   return;
-  // }
+  try {
+    await sourceUpdateRequest({ uid: source.uid }, source); // TODO: remove jsonToString() in fetchRepository()   
+  } catch (error) {
+    console.log("Product update error");
+    return;
+  }
 
   // // Delete a source by uid
 
