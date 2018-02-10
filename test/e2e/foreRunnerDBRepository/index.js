@@ -4,7 +4,7 @@ import createPureSrc from '../../../src/createPureSrc'
 import foreRunnerDBDeliveryMethod from '../../../src/deliveryMethods/ForeRunnerDB/foreRunnerDBDeliveryMethod'
 
 import jsonGetRequest from '../../../src/repositories/json/jsonGetRequest'
-import restGetByUidRequest from '../../../src/repositories/rest/restGetByUidRequest'
+import jsonGetByUidRequest from '../../../src/repositories/json/jsonGetByUidRequest'
 import jsonInsertRequest from '../../../src/repositories/json/jsonInsertRequest'
 // import restUpdateRequest from '../../../src/repositories/rest/restUpdateRequest'
 // import restDeleteRequest from '../../../src/repositories/rest/restDeleteRequest'
@@ -38,7 +38,7 @@ let sourceRepository = createPureSrc(
 // Create the repository methods
 
 let sourceGetRequest = sourceRepository(jsonGetRequest);
-// let sourceGetByUidRequest = sourceRepository(restGetByUidRequest);
+let sourceGetByUidRequest = sourceRepository(jsonGetByUidRequest);
 let sourceInsertRequest = sourceRepository(jsonInsertRequest);
 // let sourceUpdateRequest = sourceRepository(restUpdateRequest, fetchDeliveryPutOptions(jsonHeaders()));
 // let sourceDeleteRequest = sourceRepository(restDeleteRequest, fetchDeliveryDeleteOptions());
@@ -70,14 +70,14 @@ export default async function foreRunnerDBTest() {
 
   // // Retrieve a source by uid
 
-  // source = sources.data[0];
+  source = sources[0];
 
-  // try {
-  //   await sourceGetByUidRequest(source.uid);
-  // } catch (error) {
-  //   console.log("Product retrieve error");
-  //   return;
-  // }
+  try {
+    await sourceGetByUidRequest(source.uid);
+  } catch (error) {
+    console.log("Product retrieve error");
+    return;
+  }
 
   // // Update a source by uid
 

@@ -1,14 +1,10 @@
-export default async function jsonGetByUidRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query) {
+export default async function jsonGetByUidRequest(deliveryMethod, source, options, mapFromSource, mapToSource, uid) {
   let collection = await deliveryMethod(source, options, mapFromSource, mapToSource);
-  let srcObjects = collection.find(query);
+  let srcObjects = collection.find({ uid });
 
-  let object = {};
-  let responseObjects = [];
+  // TODO: Add check for srcObjects.length === 1
 
-  srcObjects.forEach(srcObject => {
-    object = mapFromSource(srcObject);
-    responseObjects.push(object);
-  });
+  let object = mapFromSource(srcObjects[0]);
 
-  return responseObjects;
+  return object;
 }
