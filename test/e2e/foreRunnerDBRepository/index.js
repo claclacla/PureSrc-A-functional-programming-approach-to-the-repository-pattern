@@ -17,30 +17,20 @@ import jsonInsertRequest from '../../../src/repositories/json/jsonInsertRequest'
 import Source from './dtos/Source'
 import { jsonToString } from '../../../src/lib/Json'
 
-// let fdb = new ForeRunnerDB();
-// let db = fdb.db("test");
-// db.persist.driver("LocalStorage");
-
-// let product = db.collection("Product");
-
-// product.insert({name: "name"});
-
-// product.save(function (err) {
-// 	if (!err) {
-//     console.log("Data saved");
-// 		// Save was successful
-// 	}
-// });
-
-// TODO: Add load from LocalStorage
-
 // Create the repository
 
 let fdb = new ForeRunnerDB();
 let db = fdb.db("test");
 db.persist.driver("LocalStorage");
 
-let productRepository = createPureSrc(db, foreRunnerDBDeliveryMethod, DATA_TYPE_JSON);
+// let sources = ["First source", "Second source"].map(name => {
+//   let source = new Source(name);
+//   return source;
+// });
+
+// db.collection("Product").insert(sources);
+
+let productRepository = createPureSrc(db.collection("Product"), foreRunnerDBDeliveryMethod, DATA_TYPE_JSON);
 
 // Create the repository methods
 
@@ -50,7 +40,7 @@ let productInsertRequest = productRepository(jsonInsertRequest, {});
 // let productUpdateRequest = productRepository(restUpdateRequest, fetchDeliveryPutOptions(jsonHeaders()));
 // let productDeleteRequest = productRepository(restDeleteRequest, fetchDeliveryDeleteOptions());
 
-(async () => {
+export default async function foreRunnerDBTest() {
 
   // Insert a new Source
 
@@ -68,7 +58,8 @@ let productInsertRequest = productRepository(jsonInsertRequest, {});
   let sources = null;
   
   try {
-    sources = await productGetRequest('');    
+    sources = await productGetRequest('');   
+    console.log(sources); 
   } catch (error) {
    console.log("Products retrieve error"); 
    return;
@@ -104,4 +95,4 @@ let productInsertRequest = productRepository(jsonInsertRequest, {});
   //   console.log("Product delete error");
   //   return;
   // }
-})();
+}

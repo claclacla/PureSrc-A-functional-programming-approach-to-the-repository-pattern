@@ -1,14 +1,14 @@
 const webpack = require('webpack');
 const path = require('path');
 
-const SRC = path.resolve(__dirname, 'test/e2e/foreRunnerDBRepository');
+const SRC = path.resolve(__dirname, 'test/e2e');
 const PUBLIC = path.resolve(__dirname, 'public/js');
 
 var config = {
   entry: SRC + '/index.js',
   output: {
     path: PUBLIC,
-    filename: 'foreRunnerDBRepository.js'
+    filename: 'pureSrc.js'
   },
   module : {
     loaders : [
