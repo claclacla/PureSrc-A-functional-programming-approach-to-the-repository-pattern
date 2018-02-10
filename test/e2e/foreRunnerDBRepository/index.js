@@ -30,15 +30,15 @@ db.persist.driver("LocalStorage");
 
 // db.collection("Product").insert(sources);
 
-let productRepository = createPureSrc(db.collection("Product"), foreRunnerDBDeliveryMethod, DATA_TYPE_JSON);
+let sourceRepository = createPureSrc(db.collection("Source"), foreRunnerDBDeliveryMethod, DATA_TYPE_JSON);
 
 // Create the repository methods
 
-let productGetRequest = productRepository(jsonGetRequest, {});
-// let productGetByUidRequest = productRepository(restGetByUidRequest, fetchDeliveryGetOptions());
-let productInsertRequest = productRepository(jsonInsertRequest, {});
-// let productUpdateRequest = productRepository(restUpdateRequest, fetchDeliveryPutOptions(jsonHeaders()));
-// let productDeleteRequest = productRepository(restDeleteRequest, fetchDeliveryDeleteOptions());
+let sourceGetRequest = sourceRepository(jsonGetRequest, {});
+// let sourceGetByUidRequest = sourceRepository(restGetByUidRequest, fetchDeliveryGetOptions());
+let sourceInsertRequest = sourceRepository(jsonInsertRequest, {});
+// let sourceUpdateRequest = sourceRepository(restUpdateRequest, fetchDeliveryPutOptions(jsonHeaders()));
+// let sourceDeleteRequest = sourceRepository(restDeleteRequest, fetchDeliveryDeleteOptions());
 
 export default async function foreRunnerDBTest() {
 
@@ -47,7 +47,7 @@ export default async function foreRunnerDBTest() {
   let source = new Source("Source");
 
   try {
-    await productInsertRequest(source); // TODO: jsonToString()  
+    await sourceInsertRequest(source); // TODO: jsonToString()  
   } catch (error) {
     console.log("Product insert error");
     return;
@@ -58,7 +58,7 @@ export default async function foreRunnerDBTest() {
   let sources = null;
   
   try {
-    sources = await productGetRequest('');   
+    sources = await sourceGetRequest('');   
     console.log(sources); 
   } catch (error) {
    console.log("Products retrieve error"); 
@@ -70,7 +70,7 @@ export default async function foreRunnerDBTest() {
   // source = sources.data[0];
 
   // try {
-  //   await productGetByUidRequest(source.uid);    
+  //   await sourceGetByUidRequest(source.uid);    
   // } catch (error) {
   //  console.log("Product retrieve error"); 
   //  return;
@@ -81,7 +81,7 @@ export default async function foreRunnerDBTest() {
   // source.name = "LiquidSource";
 
   // try {
-  //   await productUpdateRequest(source.uid, jsonToString(source)); 
+  //   await sourceUpdateRequest(source.uid, jsonToString(source)); 
   // } catch (error) {
   //   console.log("Product update error");
   //   return;
@@ -90,7 +90,7 @@ export default async function foreRunnerDBTest() {
   // // Delete a source by uid
 
   // try {
-  //   await productDeleteRequest(source.uid); 
+  //   await sourceDeleteRequest(source.uid); 
   // } catch (error) {
   //   console.log("Product delete error");
   //   return;

@@ -21,15 +21,15 @@ const API_ADDRESS = "http://localhost:3000";
 
 // Create the repository
 
-let productRepository = createPureSrc(`${API_ADDRESS}/sources`, fetchDeliveryMethod, DATA_TYPE_JSON);
+let sourceRepository = createPureSrc(`${API_ADDRESS}/sources`, fetchDeliveryMethod, DATA_TYPE_JSON);
 
 // Create the repository methods
 
-let productGetRequest = productRepository(restGetRequest, fetchDeliveryGetOptions());
-let productGetByUidRequest = productRepository(restGetByUidRequest, fetchDeliveryGetOptions());
-let productInsertRequest = productRepository(restInsertRequest, fetchDeliveryPostOptions(jsonHeaders()));
-let productUpdateRequest = productRepository(restUpdateRequest, fetchDeliveryPutOptions(jsonHeaders()));
-let productDeleteRequest = productRepository(restDeleteRequest, fetchDeliveryDeleteOptions());
+let sourceGetRequest = sourceRepository(restGetRequest, fetchDeliveryGetOptions());
+let sourceGetByUidRequest = sourceRepository(restGetByUidRequest, fetchDeliveryGetOptions());
+let sourceInsertRequest = sourceRepository(restInsertRequest, fetchDeliveryPostOptions(jsonHeaders()));
+let sourceUpdateRequest = sourceRepository(restUpdateRequest, fetchDeliveryPutOptions(jsonHeaders()));
+let sourceDeleteRequest = sourceRepository(restDeleteRequest, fetchDeliveryDeleteOptions());
 
 export default async function fetchTest() {
 
@@ -38,7 +38,7 @@ export default async function fetchTest() {
   let source = new Source("PureSource");
 
   try {
-    await productInsertRequest(jsonToString(source));  
+    await sourceInsertRequest(jsonToString(source));  
   } catch (error) {
     console.log(error);
     console.log("Product insert error");
@@ -50,7 +50,7 @@ export default async function fetchTest() {
   let sources = null;
   
   try {
-    sources = await productGetRequest('');    
+    sources = await sourceGetRequest('');    
   } catch (error) {
    console.log("Products retrieve error"); 
    return;
@@ -61,7 +61,7 @@ export default async function fetchTest() {
   source = sources.data[0];
 
   try {
-    await productGetByUidRequest(source.uid);    
+    await sourceGetByUidRequest(source.uid);    
   } catch (error) {
    console.log("Product retrieve error"); 
    return;
@@ -72,7 +72,7 @@ export default async function fetchTest() {
   source.name = "LiquidSource";
 
   try {
-    await productUpdateRequest(source.uid, jsonToString(source)); 
+    await sourceUpdateRequest(source.uid, jsonToString(source)); 
   } catch (error) {
     console.log("Product update error");
     return;
@@ -81,7 +81,7 @@ export default async function fetchTest() {
   // Delete a source by uid
 
   try {
-    await productDeleteRequest(source.uid); 
+    await sourceDeleteRequest(source.uid); 
   } catch (error) {
     console.log("Product delete error");
     return;
