@@ -1,5 +1,3 @@
-export const DATA_TYPE_JSON = "JSON";
-
 // TODO: Rename in each file the 'source' property name with 'source'
 // TODO: According to the previous change, update the README.md file 
 
