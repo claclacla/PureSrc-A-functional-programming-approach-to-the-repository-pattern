@@ -2,11 +2,14 @@
 
 ## The repository pattern revisited in terms of functional programming.
 
+- Added mappers
+- Two repositories
+
 `PureSrc` let you define a set of methods for exchanging data with a remote source. 
 
 Each repository instantiated by `PureSrc` is composed by a delivery method with its options and a set of protocols request.
 
-`createPureSrc()` is the function used to initialize a repository. It creates a stream of `data type` data from an `address` using a `delivery method`.
+`createPureSrc()` is the function used to initialize a repository. It creates a stream of data from an `address` using a `delivery method`.
 It returns another function which defines requests using a `delivery request` with a defined set of `options`.
 This other function returns a last function that executes requests with custom `parameters`.
 
@@ -91,14 +94,13 @@ http://localhost:8080
 - the source address {string}
 - the delivery method {function}: this function contains the method used to 
   access the repository data 
-- the data type {string}
 
 Returns another function to actually create the repository methods
 
 Usage example:
 
 ```
-let resourceRepository = createPureSrc(`${API_ADDRESS}/sources`, fetchDeliveryMethod, DATA_TYPE_JSON);
+let resourceRepository = createPureSrc(`${API_ADDRESS}/sources`, fetchDeliveryMethod);
 ```
 
 ---
@@ -106,37 +108,45 @@ let resourceRepository = createPureSrc(`${API_ADDRESS}/sources`, fetchDeliveryMe
 A delivery method receives three arguments:
 - the source address {string}
 - the method options {object}
-- the data type {string}
 
 Delivery method example:
 
 ```
 # Create a delivery method for json data type using the fetch() method
 
-export default async function fetchDeliveryMethod(address, options, dataType) {
-  let data = null;
+export default async function fetchDeliveryMethod(address, options) {
+  let body = null;
+  let fetchResponse = null;
 
-  let response = await fetch(address, options);
-
-  switch (dataType) {
-    case DATA_TYPE_JSON:
-      let responseText = await response.text();
-      
-      if(responseText) {
-        try {
-          data = stringToJson(responseText); 
-        } catch (error) {
-          throw new Error("Error parsing response data");
-        }
-      }
-      else {
-        data = responseText;
-      }
-
-      break;
+  try {
+    fetchResponse = await fetch(address, options);
+  } catch (error) {
+    throw new PureSrcError(`Failed to connect to ${address}`);
   }
 
-  return data;
+  if (!fetchResponse.ok) {
+    throw new DeliveryError({
+      status: fetchResponse.status,
+      message: fetchResponse.statusText
+    });
+  }
+
+  let fetchResponseBody = await fetchResponse.text();
+
+  if (fetchResponseBody) {
+    try {
+      body = stringToJson(fetchResponseBody);
+    } catch (error) {
+      throw new Error("Error parsing response data");
+    }
+  }
+  else {
+    body = fetchResponseBody;
+  }
+
+  let response = new FetchDeliveryResponse({ status: fetchResponse.status, body });
+
+  return response;
 }
 ```
 
@@ -159,7 +169,6 @@ A delivery request receives four required arguments:
 - the delivery method {function}
 - the source address {string}
 - the method options {object}
-- the data type {string}
 
 Furthermore it receives other optional parameters from the function returned by the `resourceRepository()` function. These parameters are helpful to add custom options to the request or to extend the resource address.
 
@@ -168,16 +177,23 @@ Internally it has to call the common `delivery()` function which executes the co
 Delivery request example:
 
 ```
-import delivery from '../../delivery';
-
-export default async function restGetRequest(deliveryMethod, address, options, dataType, query) {
+export default async function restGetRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query) {
   if (query) {
-    address += "?" + query;
+    source += "?" + query;
   }
 
-  let data = await delivery(deliveryMethod, address, options, dataType);
+  let restResponse = await restDelivery(deliveryMethod, source, options);
 
-  return data;
+  let srcObjects = restResponse.body.data;
+  let object = {};
+  let responseObjects = [];
+
+  srcObjects.forEach(srcObject => {
+    object = mapFromSource(srcObject);
+    responseObjects.push(object);
+  });
+
+  return responseObjects;
 }
 ```
 
