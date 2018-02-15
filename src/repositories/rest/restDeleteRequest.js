@@ -1,11 +1,11 @@
-import delivery from '../../delivery';
+import restDelivery from './restDelivery';
 
-export default async function restUpdateRequest(deliveryMethod, address, options, dataType, uid) {
-  if (uid) {
-    address += "/" + uid;
+export default async function restDeleteRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query) {
+  if (query.uid) {
+    source += "/" + query.uid;
   }
 
-  let data = await delivery(deliveryMethod, address, options, dataType);
+  await restDelivery(deliveryMethod, source, options);
 
-  return data;
+  return;
 }

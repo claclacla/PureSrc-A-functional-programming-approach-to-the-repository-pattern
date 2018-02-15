@@ -1,11 +1,22 @@
-import delivery from '../../delivery';
+import restDelivery from './restDelivery';
 
-export default async function restGetRequest(deliveryMethod, address, options, dataType, query) {
+export default async function restGetRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query) {
   if (query) {
-    address += "?" + query;
+    source += "?" + query;
   }
 
-  let data = await delivery(deliveryMethod, address, options, dataType);
+  // TODO: check restDelivery type
 
-  return data;
+  let restResponse = await restDelivery(deliveryMethod, source, options);
+
+  let srcObjects = restResponse.body.data;
+  let object = {};
+  let responseObjects = [];
+
+  srcObjects.forEach(srcObject => {
+    object = mapFromSource(srcObject);
+    responseObjects.push(object);
+  });
+
+  return responseObjects;
 }

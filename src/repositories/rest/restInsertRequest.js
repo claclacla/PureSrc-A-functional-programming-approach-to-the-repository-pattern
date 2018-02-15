@@ -1,9 +1,17 @@
-import delivery from '../../delivery';
+import { jsonToString } from '../../lib/Json/';
+import restDelivery from './restDelivery';
 
-export default async function restInsertRequest(deliveryMethod, address, options, dataType, body) {
-  options.body = body;
+export default async function restInsertRequest(deliveryMethod, source, options, mapFromSource, mapToSource, object) {
+  let srcObject = mapToSource(object);
 
-  let data = await delivery(deliveryMethod, address, options, dataType);
+  let body = {
+    data: srcObject
+  };
+  options.body = jsonToString(body);
 
-  return data;
+  // TODO: check restDelivery type
+
+  let restResponse = await restDelivery(deliveryMethod, source, options);
+
+  return restResponse.body.data;
 }

@@ -1,13 +1,19 @@
-import delivery from '../../delivery';
+import { jsonToString } from '../../lib/Json/';
+import restDelivery from './restDelivery';
 
-export default async function restUpdateRequest(deliveryMethod, address, options, dataType, uid, body) {
-  if (uid) {
-    address += "/" + uid;
+export default async function restUpdateRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query, object) {
+  if (query.uid) {
+    source += "/" + query.uid;
   }
 
-  options.body = body;
+  let srcObject = mapToSource(object);
 
-  let data = await delivery(deliveryMethod, address, options, dataType);
+  let body = {
+    data: srcObject
+  };
+  options.body = jsonToString(body);
 
-  return data;
+  let restResponse = await restDelivery(deliveryMethod, source, options);
+
+  return restResponse.body.data;
 }

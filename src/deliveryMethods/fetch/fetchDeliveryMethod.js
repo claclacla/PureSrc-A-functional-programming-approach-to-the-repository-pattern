@@ -3,9 +3,7 @@ import PureSrcError from '../../errors/PureSrcError'
 import DeliveryError from '../../errors/DeliveryError'
 import FetchDeliveryResponse from './responses/FetchDeliveryResponse'
 
-export const DATA_TYPE_JSON = "JSON";
-
-export default async function fetchDeliveryMethod(address, options, dataType) {
+export default async function fetchDeliveryMethod(address, options) {
   let body = null;
   let fetchResponse = null;
 
@@ -22,25 +20,20 @@ export default async function fetchDeliveryMethod(address, options, dataType) {
     });
   }
 
-  switch (dataType) {
-    case DATA_TYPE_JSON:
-      let fetchResponseBody = await fetchResponse.text();
+  let fetchResponseBody = await fetchResponse.text();
 
-      if (fetchResponseBody) {
-        try {
-          body = stringToJson(fetchResponseBody);
-        } catch (error) {
-          throw new Error("Error parsing response data");
-        }
-      }
-      else {
-        body = fetchResponseBody;
-      }
-
-      break;
+  if (fetchResponseBody) {
+    try {
+      body = stringToJson(fetchResponseBody);
+    } catch (error) {
+      throw new Error("Error parsing response data");
+    }
+  }
+  else {
+    body = fetchResponseBody;
   }
 
-  let response = new FetchDeliveryResponse({ status, body });
+  let response = new FetchDeliveryResponse({ status: fetchResponse.status, body });
 
   return response;
 }

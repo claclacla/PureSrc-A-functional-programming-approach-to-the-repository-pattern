@@ -1,6 +1,6 @@
 import createPureSrc from '../../../src/createPureSrc'
 
-import fetchDeliveryMethod, { DATA_TYPE_JSON } from '../../../src/deliveryMethods/fetch/fetchDeliveryMethod'
+import fetchDeliveryMethod from '../../../src/deliveryMethods/fetch/fetchDeliveryMethod'
 
 import jsonHeaders from '../../../src/deliveryMethods/fetch/headers/jsonHeaders'
 import fetchDeliveryGetOptions from '../../../src/deliveryMethods/fetch/options/fetchDeliveryGetOptions'
@@ -14,31 +14,38 @@ import restInsertRequest from '../../../src/repositories/rest/restInsertRequest'
 import restUpdateRequest from '../../../src/repositories/rest/restUpdateRequest'
 import restDeleteRequest from '../../../src/repositories/rest/restDeleteRequest'
 
-import Source from './dtos/Source'
+import Source from '../entities/Source';
+import mapSourceDTOToSource from '../mapToEntities/mapSourceDTOToSource';
+import mapSourceToSourceDTO from '../mapToDtos/mapSourceToSourceDTO';
+
 import { jsonToString } from '../../../src/lib/Json'
 
 const API_ADDRESS = "http://localhost:3000";
 
 // Create the repository
 
-let productRepository = createPureSrc(`${API_ADDRESS}/sources`, fetchDeliveryMethod, DATA_TYPE_JSON);
+let sourceRepository = createPureSrc(
+  `${API_ADDRESS}/sources`,
+  fetchDeliveryMethod,
+  mapSourceDTOToSource,
+  mapSourceToSourceDTO);
 
 // Create the repository methods
 
-let productGetRequest = productRepository(restGetRequest, fetchDeliveryGetOptions());
-let productGetByUidRequest = productRepository(restGetByUidRequest, fetchDeliveryGetOptions());
-let productInsertRequest = productRepository(restInsertRequest, fetchDeliveryPostOptions(jsonHeaders()));
-let productUpdateRequest = productRepository(restUpdateRequest, fetchDeliveryPutOptions(jsonHeaders()));
-let productDeleteRequest = productRepository(restDeleteRequest, fetchDeliveryDeleteOptions());
+let sourceGetRequest = sourceRepository(restGetRequest, fetchDeliveryGetOptions());
+let sourceGetByUidRequest = sourceRepository(restGetByUidRequest, fetchDeliveryGetOptions());
+let sourceInsertRequest = sourceRepository(restInsertRequest, fetchDeliveryPostOptions(jsonHeaders()));
+let sourceUpdateRequest = sourceRepository(restUpdateRequest, fetchDeliveryPutOptions(jsonHeaders()));
+let sourceDeleteRequest = sourceRepository(restDeleteRequest, fetchDeliveryDeleteOptions());
 
-(async () => {
+export default async function fetchTest() {
 
   // Insert a new Source
 
-  let source = new Source("PureSource");
+  let source = new Source({ name: "PureSource" });
 
   try {
-    await productInsertRequest(jsonToString(source));  
+    await sourceInsertRequest(source);
   } catch (error) {
     console.log("Product insert error");
     return;
@@ -47,24 +54,23 @@ let productDeleteRequest = productRepository(restDeleteRequest, fetchDeliveryDel
   // Retrieve all the sources
 
   let sources = null;
-  
+
   try {
-    let getRequestResponse = await productGetRequest('');
-    sources = getRequestResponse.body;    
+    sources = await sourceGetRequest('');
   } catch (error) {
-   console.log("Products retrieve error"); 
-   return;
+    console.log("Products retrieve error");
+    return;
   }
 
   // Retrieve a source by uid
 
-  source = sources.data[0];
+  source = sources[0];
 
   try {
-    await productGetByUidRequest(source.uid);    
+    await sourceGetByUidRequest(source.uid);
   } catch (error) {
-   console.log("Product retrieve error"); 
-   return;
+    console.log("Product retrieve error");
+    return;
   }
 
   // Update a source by uid
@@ -72,7 +78,7 @@ let productDeleteRequest = productRepository(restDeleteRequest, fetchDeliveryDel
   source.name = "LiquidSource";
 
   try {
-    await productUpdateRequest(source.uid, jsonToString(source)); 
+    await sourceUpdateRequest({ uid: source.uid }, source);
   } catch (error) {
     console.log("Product update error");
     return;
@@ -81,9 +87,9 @@ let productDeleteRequest = productRepository(restDeleteRequest, fetchDeliveryDel
   // Delete a source by uid
 
   try {
-    await productDeleteRequest(source.uid); 
+    await sourceDeleteRequest({ uid: source.uid });
   } catch (error) {
     console.log("Product delete error");
     return;
   }
-})();
+}

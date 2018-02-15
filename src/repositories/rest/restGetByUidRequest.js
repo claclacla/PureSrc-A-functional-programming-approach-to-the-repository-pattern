@@ -1,11 +1,14 @@
-import delivery from '../../delivery';
+import restDelivery from './restDelivery';
 
-export default async function restGetByUidRequest(deliveryMethod, address, options, dataType, uid) {
+export default async function restGetByUidRequest(deliveryMethod, source, options, mapFromSource, mapToSource, uid) {
   if (uid) {
-    address += "/" + uid;
+    source += "/" + uid;
   }
 
-  let data = await delivery(deliveryMethod, address, options, dataType);
+  let restResponse = await restDelivery(deliveryMethod, source, options);
 
-  return data;
+  let srcObject = restResponse.body.data;
+  let object = mapFromSource(srcObject);
+
+  return object;
 }

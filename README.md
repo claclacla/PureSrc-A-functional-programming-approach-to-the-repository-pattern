@@ -4,15 +4,21 @@
 
 `PureSrc` let you define a set of methods for exchanging data with a remote source. 
 
-Each repository instantiated by `PureSrc` is composed by a delivery method with its options and a set of protocols request.
+Each repository instantiated by `PureSrc` is composed by a delivery method with its options and a set of protocols requests.
 
-`createPureSrc()` is the function used to initialize a repository. It creates a stream of `data type` data from an `address` using a `delivery method`.
+`createPureSrc()` is the function used to initialize a repository. It creates a stream of data from an `address` using a `delivery method`. The results are mapped into the application using the `mapFromSource` function parameter or dispatched immediately after a `mapToSource` execution.
 It returns another function which defines requests using a `delivery request` with a defined set of `options`.
 This other function returns a last function that executes requests with custom `parameters`.
 
-In this implementation the repository is a typical `RESTful` client and it has specific tools for connecting to an API server. The provided `delivery method` is `src/deliveryMethods/fetch/fetchDeliveryMethod.js` which uses the global method `fetch` to access to remote resource. But you can add your own delivery method or your repository requests files according to your own protocol.
+In this implementation the repositories are a typical `RESTful` client with specific tools for connecting to an API server and a lightweight `json database`. 
 
-For a complete example open the file `e2e/fetchRepository/index.js`.
+The provided delivery method for the first repository is `src/deliveryMethods/fetch/fetchDeliveryMethod.js` which uses the global method `fetch` to access to remote resource. The repository requests manage the data mapping, but the command to retrieve the data is entirely executed in the fetch delivery method function. 
+
+The intended scope for the latter repository is to provide a lightweight support for testing a frontend app in isolation. The delivery method is `src/deliveryMethods/ForeRunnerDB/foreRunnerDBDeliveryMethod.js` which wraps the database collection object.
+
+You can add your own delivery method or your repository requests files according to your own protocol.
+
+For a complete example open the file `test/e2e/fetchRepository/index.js` or `test/e2e/foreRunnerDBRepository/index.js`.
 
 --------------------------------------------------------------------------------
 
@@ -87,56 +93,65 @@ http://localhost:8080
 
 ### Usage
 
-`createPureSrc()` receives three arguments:
+`createPureSrc()` receives four arguments:
 - the source address {string}
 - the delivery method {function}: this function contains the method used to 
   access the repository data 
-- the data type {string}
+- the mapper from source data {function}: this function is used to map the source object data to the application entity
+- the mapper to source data {function}: this function is used to map the application entity data to the source object
 
 Returns another function to actually create the repository methods
 
 Usage example:
 
 ```
-let resourceRepository = createPureSrc(`${API_ADDRESS}/sources`, fetchDeliveryMethod, DATA_TYPE_JSON);
+let resourceRepository = createPureSrc(`${API_ADDRESS}/sources`, fetchDeliveryMethod, mapFromSource, mapToSource);
 ```
 
 ---
 
-A delivery method receives three arguments:
+A delivery method receives two arguments:
 - the source address {string}
 - the method options {object}
-- the data type {string}
 
 Delivery method example:
 
 ```
 # Create a delivery method for json data type using the fetch() method
 
-export default async function fetchDeliveryMethod(address, options, dataType) {
-  let data = null;
+export default async function fetchDeliveryMethod(address, options) {
+  let body = null;
+  let fetchResponse = null;
 
-  let response = await fetch(address, options);
-
-  switch (dataType) {
-    case DATA_TYPE_JSON:
-      let responseText = await response.text();
-      
-      if(responseText) {
-        try {
-          data = stringToJson(responseText); 
-        } catch (error) {
-          throw new Error("Error parsing response data");
-        }
-      }
-      else {
-        data = responseText;
-      }
-
-      break;
+  try {
+    fetchResponse = await fetch(address, options);
+  } catch (error) {
+    throw new PureSrcError(`Failed to connect to ${address}`);
   }
 
-  return data;
+  if (!fetchResponse.ok) {
+    throw new DeliveryError({
+      status: fetchResponse.status,
+      message: fetchResponse.statusText
+    });
+  }
+
+  let fetchResponseBody = await fetchResponse.text();
+
+  if (fetchResponseBody) {
+    try {
+      body = stringToJson(fetchResponseBody);
+    } catch (error) {
+      throw new Error("Error parsing response data");
+    }
+  }
+  else {
+    body = fetchResponseBody;
+  }
+
+  let response = new FetchDeliveryResponse({ status: fetchResponse.status, body });
+
+  return response;
 }
 ```
 
@@ -155,29 +170,35 @@ let resourceGetRequest = resourceRepository(restGetRequest, fetchDeliveryGetOpti
 ```
 ---
 
-A delivery request receives four required arguments:
+A delivery request receives five required arguments:
 - the delivery method {function}
 - the source address {string}
 - the method options {object}
-- the data type {string}
+- mapFromSource {function}
+- mapToSource {function}
 
 Furthermore it receives other optional parameters from the function returned by the `resourceRepository()` function. These parameters are helpful to add custom options to the request or to extend the resource address.
-
-Internally it has to call the common `delivery()` function which executes the command.
 
 Delivery request example:
 
 ```
-import delivery from '../../delivery';
-
-export default async function restGetRequest(deliveryMethod, address, options, dataType, query) {
+export default async function restGetRequest(deliveryMethod, source, options, mapFromSource, mapToSource, query) {
   if (query) {
-    address += "?" + query;
+    source += "?" + query;
   }
 
-  let data = await delivery(deliveryMethod, address, options, dataType);
+  let restResponse = await restDelivery(deliveryMethod, source, options);
 
-  return data;
+  let srcObjects = restResponse.body.data;
+  let object = {};
+  let responseObjects = [];
+
+  srcObjects.forEach(srcObject => {
+    object = mapFromSource(srcObject);
+    responseObjects.push(object);
+  });
+
+  return responseObjects;
 }
 ```
 
@@ -199,3 +220,4 @@ This project is licensed under the MIT License
 
 - [Currying in javascript](https://medium.com/@kbrainwave/currying-in-javascript-ce6da2d324fe)
 - [Javascript functional programming](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0)
+- [ForeRunnerDB](https://github.com/Irrelon/ForerunnerDB)
