@@ -26,7 +26,9 @@ class SourceService {
     this.server
       .post("/sources")
       .set('Content-Type', 'application/json')
-      .send(source)
+      .send({
+        data: source
+      })
       .expect("Content-type", /json/)
       .expect(201) 
       .end(function (err, res) {
@@ -54,7 +56,9 @@ class SourceService {
     this.server
       .put("/sources/" + uid)
       .set('Content-Type', 'application/json')
-      .send(source)
+      .send({
+        data: source
+      })
       .expect("Content-type", /json/)
       .expect(200) 
       .end(function (err, res) {
