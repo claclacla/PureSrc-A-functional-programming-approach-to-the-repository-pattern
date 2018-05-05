@@ -27,9 +27,9 @@ For a complete example open the file `test/e2e/fetchRepository/index.js` or `tes
 What things you need to install the software
 
 ```
-node
-docker
-mocha
+docker 17+
+docker-compose 1.19.0+
+
 ```
 
 --------------------------------------------------------------------------------
@@ -40,11 +40,14 @@ mocha
 # Get the latest snapshot
 git clone https://github.com/claclacla/PureSrc-A-functional-programming-approach-to-the-repository-pattern
 
-# Change directory
-cd PureSrc-A-functional-programming-approach-to-the-repository-pattern
+# Go to the docker dev folder
+cd docker/dev
 
-# Install NPM dependencies
-npm i
+# Create a .env file with your docker/dev folder
+# with the path to PureSrc folders
+echo "PURE_SRC_FOLDER=/your-path-to/PureSrc-A-functional-programming-approach-to-the-repository-pattern
+API_SERVER_FOLDER=/your-path-to/PureSrc-A-functional-programming-approach-to-the-repository-pattern/docker/dev/api-server
+WEB_SERVER_FOLDER=/your-path-to/PureSrc-A-functional-programming-approach-to-the-repository-pattern/public" > .env
 
 ```
 
@@ -53,36 +56,20 @@ npm i
 ### Testing
 
 ```
-# Download the node docker image
-sudo docker pull node:9.2-slim
+# Go to the docker dev folder
+cd docker/dev
 
-# Change directory
-cd PureSrc-A-functional-programming-approach-to-the-repository-pattern/test/api-server
-
-# Create the api server container
-sudo docker build -t claclacla/pure-src-api-server .
-
-# Run the api server
-sudo docker run -d -v /write-your-absolute-path-to/PureSrc-A-functional-programming-approach-to-the-repository-pattern/test/api-server:/usr/src/app -p 3000:3000 --name PureSrcApiServer claclacla/pure-src-api-server
-
-# Change directory
-cd PureSrc-A-functional-programming-approach-to-the-repository-pattern/test/web-server
-
-# Build the local web server
-sudo docker build . -t claclacla/spa-http-server
-
-# Run the local web server
-sudo docker run -d -p 8080:8080 -v /write-your-absolute-path-to/PureSrc-A-functional-programming-approach-to-the-repository-pattern/public:/usr/src/app --name PureSrcWebServer -it claclacla/spa-http-server
+# Compose the docker containers
+sudo docker-compose up -d
 
 # Change directory
 cd PureSrc-A-functional-programming-approach-to-the-repository-pattern
 
 # Test if the api server is up and running 
-apiaddress=localhost:3000 mocha --ui tdd test/api-server/test/e2e/sources.js 
+sudo docker exec -e apiaddress=pure-src-api-server:3000 -it PureSrc /usr/src/app/node_modules/.bin/mocha --ui tdd /usr/src/app/docker/dev/api-server/test/e2e/sources.js 
 
-# Compile the fetch repository e2e test using webpack
-# Use the '-w' flag for watch mode
-node_modules/.bin/webpack -d 
+# Launch webpack in watch mode
+sudo docker exec -it PureSrc npm start --prefix /usr/src/app 
 
 # Open your browser and type the following address
 http://localhost:8080

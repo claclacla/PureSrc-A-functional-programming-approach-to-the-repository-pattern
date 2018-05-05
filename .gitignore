@@ -1,3 +1,4 @@
+.env
 public/js/*
 package-lock.json
 

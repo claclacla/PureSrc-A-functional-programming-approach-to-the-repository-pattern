@@ -1,0 +1,39 @@
+version: '3'
+
+networks:
+  pure_src:
+    driver: bridge
+
+services:
+  pure-src-api-server:
+    build: ./api-server
+    image: claclacla/pure-src-api-server
+    container_name: PureSrcApiServer
+    networks:
+      - pure_src
+    ports:
+      - 3000:3000
+    volumes:
+      - "${API_SERVER_FOLDER}:/usr/src/app"
+
+  pure-src-web-server:
+    build: ./web-server
+    image: claclacla/spa-http-server
+    container_name: PureSrcWebServer
+    networks:
+      - pure_src
+    ports:
+      - 8080:8080
+    volumes:
+      - "${WEB_SERVER_FOLDER}:/usr/src/app"
+
+  pure-src:
+    build: ./pure-src
+    image: claclacla/pure-src
+    container_name: PureSrc
+    networks:
+      - pure_src
+    volumes: 
+      - "${PURE_SRC_FOLDER}:/usr/src/app"  
+    tty: true
+    stdin_open: true

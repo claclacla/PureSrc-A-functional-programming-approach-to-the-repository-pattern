@@ -7,7 +7,6 @@ var SourceFactory = require('./factories/SourceFactory');
 
 // Example: apiaddress=localhost:3000 mocha --ui tdd test/e2e/sources.js --timeout 5000
 
-var apiaddress = process.env.apiaddress;
 var server = supertest.agent(process.env.apiaddress);
 
 const SOURCE_NAME = chance.word({ length: 20 });
