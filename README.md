@@ -81,8 +81,43 @@ http://localhost:8080
 ### Build
 
 ```
+# Go to the docker dev folder
+cd docker/dev
+
+# Compose the docker containers
+sudo docker-compose up -d
+
 # Launch webpack 
 sudo docker exec -it PureSrc npm run build --prefix /usr/src/app 
+
+```
+
+--------------------------------------------------------------------------------
+
+### Publish to NPM
+
+```
+# Go to the docker dev folder
+cd docker/dev
+
+# Compose the docker containers
+sudo docker-compose up -d
+
+# Modify the npm package version on webpack/build/package.json
+
+# Build the new npm version using the previous command
+
+# Connect to the PureSrc container
+sudo docker exec -it PureSrc bash
+
+# Login to the npm repository
+npm login
+
+# Move to the dist folder
+cd /usr/src/app/dist
+
+# Publish the new version to the npm repository
+npm publish
 
 ```
 
