@@ -1,13 +1,9 @@
 import ForeRunnerDB from 'forerunnerdb'
-import createPureSrc from '../../../src/createPureSrc'
+import { createPureSrc } from '@PureSrc'
 
-import foreRunnerDBDeliveryMethod from '../../../src/deliveryMethods/ForeRunnerDB/foreRunnerDBDeliveryMethod'
+import { foreRunnerDBDeliveryMethod } from '@PureSrc/deliveryMethods/ForeRunnerDB'
 
-import inMemoryJsonDBGetRequest from '../../../src/repositories/inMemoryJsonDB/inMemoryJsonDBGetRequest'
-import inMemoryJsonDBGetByUidRequest from '../../../src/repositories/inMemoryJsonDB/inMemoryJsonDBGetByUidRequest'
-import inMemoryJsonDBInsertRequest from '../../../src/repositories/inMemoryJsonDB/inMemoryJsonDBInsertRequest'
-import inMemoryJsonDBUpdateRequest from '../../../src/repositories/inMemoryJsonDB/inMemoryJsonDBUpdateRequest'
-import inMemoryJsonDBDeleteRequest from '../../../src/repositories/inMemoryJsonDB/inMemoryJsonDBDeleteRequest'
+import { inMemoryJsonDBDeleteRequest, inMemoryJsonDBGetByUidRequest, inMemoryJsonDBGetRequest, inMemoryJsonDBInsertRequest, inMemoryJsonDBUpdateRequest } from '@PureSrc/repositories/inMemoryJsonDB'
 
 import UID from '../lib/uid/UID';
 

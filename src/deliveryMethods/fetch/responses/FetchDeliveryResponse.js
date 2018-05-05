@@ -13,4 +13,4 @@ class FetchDeliveryResponse {
   }
 }
 
-module.exports = FetchDeliveryResponse;
+export default FetchDeliveryResponse;

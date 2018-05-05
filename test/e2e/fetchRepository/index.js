@@ -1,18 +1,8 @@
-import createPureSrc from '../../../src/createPureSrc'
+import { createPureSrc } from '@PureSrc'
+import { fetchDeliveryMethod, jsonHeaders } from '@PureSrc/deliveryMethods/fetch'
+import { fetchDeliveryGetOptions, fetchDeliveryPostOptions, fetchDeliveryPutOptions, fetchDeliveryDeleteOptions } from '@PureSrc/deliveryMethods/fetch'
 
-import fetchDeliveryMethod from '../../../src/deliveryMethods/fetch/fetchDeliveryMethod'
-
-import jsonHeaders from '../../../src/deliveryMethods/fetch/headers/jsonHeaders'
-import fetchDeliveryGetOptions from '../../../src/deliveryMethods/fetch/options/fetchDeliveryGetOptions'
-import fetchDeliveryPostOptions from '../../../src/deliveryMethods/fetch/options/fetchDeliveryPostOptions'
-import fetchDeliveryPutOptions from '../../../src/deliveryMethods/fetch/options/fetchDeliveryPutOptions'
-import fetchDeliveryDeleteOptions from '../../../src/deliveryMethods/fetch/options/fetchDeliveryDeleteOptions'
-
-import restGetRequest from '../../../src/repositories/rest/restGetRequest'
-import restGetByUidRequest from '../../../src/repositories/rest/restGetByUidRequest'
-import restInsertRequest from '../../../src/repositories/rest/restInsertRequest'
-import restUpdateRequest from '../../../src/repositories/rest/restUpdateRequest'
-import restDeleteRequest from '../../../src/repositories/rest/restDeleteRequest'
+import { restGetRequest, restGetByUidRequest, restInsertRequest, restUpdateRequest, restDeleteRequest } from '@PureSrc/repositories/rest'
 
 import Source from '../entities/Source';
 import mapSourceDTOToSource from '../mapToEntities/mapSourceDTOToSource';
