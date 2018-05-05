@@ -21,6 +21,7 @@
   },
   "scripts": {
     "start": "node_modules/.bin/webpack -d -w --config webpack.dev.js",
+    "build": "rm -fr ./dist; mkdir dist; cp -fr src/* dist; cp README.md dist; cp webpack/build/package.json dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

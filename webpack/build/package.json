@@ -1,0 +1,30 @@
+{
+	"name": "pure-src",
+	"version": "1.0.2",
+	"description": "PureSrc: A functional programming approach to the repository pattern",
+	"main": "index.js",
+	"directories": {
+		"lib": "lib"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/claclacla/PureSrc-A-functional-programming-approach-to-the-repository-pattern.git"
+	},
+	"keywords": [
+		"functional",
+		"programming",
+		"javascript",
+		"repository",
+		"pattern",
+		"es6"
+	],
+	"author": "Simone Adelchino",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/claclacla/PureSrc-A-functional-programming-approach-to-the-repository-pattern/issues"
+	},
+	"homepage": "https://github.com/claclacla/PureSrc-A-functional-programming-approach-to-the-repository-pattern#readme"
+}

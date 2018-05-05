@@ -53,7 +53,7 @@ WEB_SERVER_FOLDER=/your-path-to/PureSrc-A-functional-programming-approach-to-the
 
 --------------------------------------------------------------------------------
 
-### Testing
+### Development
 
 ```
 # Go to the docker dev folder
@@ -73,6 +73,16 @@ sudo docker exec -it PureSrc npm start --prefix /usr/src/app
 
 # Open your browser and type the following address
 http://localhost:8080
+
+```
+
+--------------------------------------------------------------------------------
+
+### Build
+
+```
+# Launch webpack 
+sudo docker exec -it PureSrc npm run build --prefix /usr/src/app 
 
 ```
 
