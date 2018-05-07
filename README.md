@@ -87,7 +87,7 @@ cd docker/dev
 # Compose the docker containers
 sudo docker-compose up -d
 
-# Launch webpack 
+# Build the new PureSrc version
 sudo docker exec -it PureSrc npm run build --prefix /usr/src/app 
 
 ```
