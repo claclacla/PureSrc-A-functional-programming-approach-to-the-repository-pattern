@@ -12,6 +12,7 @@ export default async function restInsertRequest(deliveryMethod, source, options,
   // TODO: check restDelivery type
 
   let restResponse = await restDelivery(deliveryMethod, source, options);
+  let restResponseObject = mapFromSource(restResponse.body.data);
 
-  return restResponse.body.data;
+  return restResponseObject;
 }

@@ -14,6 +14,7 @@ export default async function restUpdateRequest(deliveryMethod, source, options,
   options.body = jsonToString(body);
 
   let restResponse = await restDelivery(deliveryMethod, source, options);
+  let restResponseObject = mapFromSource(restResponse.body.data);
 
-  return restResponse.body.data;
+  return restResponseObject;
 }
