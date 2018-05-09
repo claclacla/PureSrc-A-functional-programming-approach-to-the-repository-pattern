@@ -105,7 +105,7 @@ sudo docker-compose up -d
 
 # Modify the npm package version on webpack/build/package.json
 
-# Build the new npm version using the previous command
+# Build the new npm version using the Build section command
 
 # Connect to the PureSrc container
 sudo docker exec -it PureSrc bash
