@@ -79,6 +79,37 @@ class SourceService {
         resolve();
       });
   }
+
+  getCoordinates(uid, resolve, reject) {
+    this.server
+      .get("/sources/" + uid + "/coordinates")
+      .expect("Content-type", /json/)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) reject(res.body);
+
+        var coordinates = res.body.data;
+
+        resolve(coordinates);
+      });
+  }
+
+  setCoordinates(uid, sourceCoordinates, resolve, reject) {
+    this.server
+      .put("/sources/" + uid + "/coordinates/")
+      .send({
+        data: sourceCoordinates
+      })
+      .expect("Content-type", /json/)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) reject(res.body);
+
+        var coordinates = res.body.data;
+
+        resolve(coordinates);
+      });
+  }
 }
 
 module.exports = SourceService;

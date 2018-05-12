@@ -1,9 +1,5 @@
-const IDTO = require("./IDTO");
-
-class Coordinates extends IDTO {
-  constructor({ uid, lat, lng }) {
-    super(uid);
-
+class SourceCoordinates {
+  constructor({ lat, lng }) {
     if (lat === undefined) {
       throw new Error("The lat parameter is required");
     }
@@ -17,4 +13,4 @@ class Coordinates extends IDTO {
   }
 }
 
-module.exports = Coordinates;
+module.exports = SourceCoordinates;

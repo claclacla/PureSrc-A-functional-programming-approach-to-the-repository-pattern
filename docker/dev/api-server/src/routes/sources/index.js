@@ -75,12 +75,33 @@ router
 router
   .get("/:uid/coordinates", function (req, res, next) {
     let uid = req.params.uid;
+    
     let source = sources.find(source => source.uid === uid);
 
-    let coordinates = new Coordinates({ lat: source.lat, lng: source.lng });
+    let coordinates = new Coordinates({ uid: UID.create(), lat: source.lat, lng: source.lng });
 
     res.send({
       data: coordinates
+    });
+  })
+  .put('/:uid/coordinates', function (req, res, next) {
+    let uid = req.params.uid;
+    let sourceCoordinatesDto = req.body.data;
+
+    let resSource = null;
+
+    sources = sources.map(source => {
+      if (source.uid === uid) {
+        source.lat = sourceCoordinatesDto.lat;
+        source.lng = sourceCoordinatesDto.lng;
+        resSource = source;
+      }
+
+      return source;
+    });
+
+    res.send({
+      data: resSource
     });
   });
 
