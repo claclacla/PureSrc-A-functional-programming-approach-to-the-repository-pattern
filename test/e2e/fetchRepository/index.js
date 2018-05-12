@@ -5,9 +5,11 @@ import { fetchDeliveryGetOptions, fetchDeliveryPostOptions, fetchDeliveryPutOpti
 import { restGetRequest, restGetByUidRequest, restInsertRequest, restUpdateRequest, restDeleteRequest } from '@PureSrc/repositories/rest'
 
 import Source from '../entities/Source';
+import SourceCoordinates from '../entities/SourceCoordinates';
 import mapSourceDTOToSource from '../mapToEntities/mapSourceDTOToSource';
 import mapSourceCoordinatesDTOToSourceCoordinates from '../mapToEntities/mapSourceCoordinatesDTOToSourceCoordinates';
 import mapSourceToSourceDTO from '../mapToDtos/mapSourceToSourceDTO';
+import mapSourceCoordinatesToSourceCoordinatesDTO from '../mapToDtos/mapSourceCoordinatesToSourceCoordinatesDTO';
 
 import getSourceCoordinatesByUidRequest from './rest/getSourceCoordinatesByUidRequest';
 import setSourceCoordinatesByUidRequest from './rest/setSourceCoordinatesByUidRequest';
@@ -32,8 +34,8 @@ let sourceInsertRequest = sourceRepository(restInsertRequest, fetchDeliveryPostO
 let sourceUpdateRequest = sourceRepository(restUpdateRequest, fetchDeliveryPutOptions(jsonHeaders()));
 let sourceDeleteRequest = sourceRepository(restDeleteRequest, fetchDeliveryDeleteOptions());
 
-let sourceCoordinatesGetByUidRequest = sourceRepository(getSourceCoordinatesByUidRequest, fetchDeliveryGetOptions(), mapSourceCoordinatesDTOToSourceCoordinates);
-let sourceCoordinatesSetByUidRequest = sourceRepository(setSourceCoordinatesByUidRequest, fetchDeliveryPutOptions(), mapSourceCoordinatesToSourceCoordinatesDTO);
+let retrieveSourceCoordinatesByUidRequest = sourceRepository(getSourceCoordinatesByUidRequest, fetchDeliveryGetOptions(), mapSourceCoordinatesDTOToSourceCoordinates);
+let updateSourceCoordinatesByUidRequest = sourceRepository(setSourceCoordinatesByUidRequest, fetchDeliveryPutOptions(jsonHeaders()), mapSourceCoordinatesDTOToSourceCoordinates, mapSourceCoordinatesToSourceCoordinatesDTO);
 
 export default async function fetchTest() {
 
@@ -82,19 +84,21 @@ export default async function fetchTest() {
     return;
   }
 
-  // Retrieve a source coordinates by uid
+  // Update a source coordinates by uid
   
+  let newSourceCoordinates = new SourceCoordinates({lat: 47.007903, lng: 11.745257});
+
   try {
-    let coordinates = await sourceCoordinatesGetByUidRequest(source.uid);    
+    await updateSourceCoordinatesByUidRequest({ uid: source.uid }, newSourceCoordinates);
   } catch (error) {
-    console.log("Source coordinates retrieve error");
+    console.log("Source update error");
     return;
   }
 
   // Retrieve a source coordinates by uid
   
   try {
-    let coordinates = await sourceCoordinatesGetByUidRequest(source.uid);    
+    let coordinates = await retrieveSourceCoordinatesByUidRequest(source.uid);
   } catch (error) {
     console.log("Source coordinates retrieve error");
     return;
