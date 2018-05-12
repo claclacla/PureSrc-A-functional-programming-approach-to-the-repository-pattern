@@ -66,7 +66,7 @@ sudo docker-compose up -d
 cd PureSrc-A-functional-programming-approach-to-the-repository-pattern
 
 # Test if the api server is up and running 
-sudo docker exec -e apiaddress=pure-src-api-server:3000 -it PureSrc /usr/src/app/node_modules/.bin/mocha --ui tdd /usr/src/app/docker/dev/api-server/test/e2e/sources.js 
+sudo docker exec -e apiaddress=pure-src-api-server:3000 -it PureSrc /usr/src/app/node_modules/.bin/mocha --ui tdd /usr/src/app/docker/dev/api-server/test/e2e
 
 # Launch webpack in watch mode
 sudo docker exec -it PureSrc npm start --prefix /usr/src/app 

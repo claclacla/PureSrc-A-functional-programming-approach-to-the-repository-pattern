@@ -1,10 +1,8 @@
 class IDTO {
   constructor(uid) {
-    if (uid === undefined) {
-      throw new Error("The parameter UID is required");
+    if (uid !== undefined) {
+      this.uid = uid;
     }
-
-    this.uid = uid;
   }
 }
 

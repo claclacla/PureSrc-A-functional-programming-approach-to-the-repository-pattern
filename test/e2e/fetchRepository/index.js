@@ -6,7 +6,11 @@ import { restGetRequest, restGetByUidRequest, restInsertRequest, restUpdateReque
 
 import Source from '../entities/Source';
 import mapSourceDTOToSource from '../mapToEntities/mapSourceDTOToSource';
+import mapSourceCoordinatesDTOToSourceCoordinates from '../mapToEntities/mapSourceCoordinatesDTOToSourceCoordinates';
 import mapSourceToSourceDTO from '../mapToDtos/mapSourceToSourceDTO';
+
+import getSourceCoordinatesByUidRequest from './rest/getSourceCoordinatesByUidRequest';
+import setSourceCoordinatesByUidRequest from './rest/setSourceCoordinatesByUidRequest';
 
 import { jsonToString } from '../../../src/lib/Json'
 
@@ -28,16 +32,20 @@ let sourceInsertRequest = sourceRepository(restInsertRequest, fetchDeliveryPostO
 let sourceUpdateRequest = sourceRepository(restUpdateRequest, fetchDeliveryPutOptions(jsonHeaders()));
 let sourceDeleteRequest = sourceRepository(restDeleteRequest, fetchDeliveryDeleteOptions());
 
+let sourceCoordinatesGetByUidRequest = sourceRepository(getSourceCoordinatesByUidRequest, fetchDeliveryGetOptions(), mapSourceCoordinatesDTOToSourceCoordinates);
+let sourceCoordinatesSetByUidRequest = sourceRepository(setSourceCoordinatesByUidRequest, fetchDeliveryPutOptions(), mapSourceCoordinatesToSourceCoordinatesDTO);
+
 export default async function fetchTest() {
 
   // Insert a new Source
 
-  let source = new Source({ name: "PureSource" });
+  const SOURCE_NAME = "PureSrc";
+  let source = new Source({ name: SOURCE_NAME, lat: 47.007903, lng: 11.745257 });
 
   try {
     await sourceInsertRequest(source);
   } catch (error) {
-    console.log("Product insert error");
+    console.log("Source insert error");
     return;
   }
 
@@ -48,18 +56,18 @@ export default async function fetchTest() {
   try {
     sources = await sourceGetRequest('');
   } catch (error) {
-    console.log("Products retrieve error");
+    console.log("Sources retrieve error");
     return;
   }
 
   // Retrieve a source by uid
 
-  source = sources[0];
+  source = sources.find(repositorySource => repositorySource.name === SOURCE_NAME);
 
   try {
     await sourceGetByUidRequest(source.uid);
   } catch (error) {
-    console.log("Product retrieve error");
+    console.log("Source retrieve error");
     return;
   }
 
@@ -70,7 +78,25 @@ export default async function fetchTest() {
   try {
     await sourceUpdateRequest({ uid: source.uid }, source);
   } catch (error) {
-    console.log("Product update error");
+    console.log("Source update error");
+    return;
+  }
+
+  // Retrieve a source coordinates by uid
+  
+  try {
+    let coordinates = await sourceCoordinatesGetByUidRequest(source.uid);    
+  } catch (error) {
+    console.log("Source coordinates retrieve error");
+    return;
+  }
+
+  // Retrieve a source coordinates by uid
+  
+  try {
+    let coordinates = await sourceCoordinatesGetByUidRequest(source.uid);    
+  } catch (error) {
+    console.log("Source coordinates retrieve error");
     return;
   }
 
@@ -79,7 +105,7 @@ export default async function fetchTest() {
   try {
     await sourceDeleteRequest({ uid: source.uid });
   } catch (error) {
-    console.log("Product delete error");
+    console.log("Source delete error");
     return;
   }
 }

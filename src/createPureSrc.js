@@ -1,12 +1,12 @@
 export default function createPureSrc(source, deliveryMethod, mapFromSource, mapToSource) {
-  return function (deliveryRequest, options) {
+  return function (deliveryRequest, options, requestMapFromSource, requestMapToSource) {
     return async function (...requestParameters) {
       let data = await deliveryRequest(
         deliveryMethod,
         source,
         options,
-        mapFromSource, 
-        mapToSource,
+        requestMapFromSource ? requestMapFromSource : mapFromSource, 
+        requestMapToSource ? requestMapToSource : mapToSource,
         ...requestParameters
       );
 

@@ -6,5 +6,13 @@ import Source from '../entities/Source';
 export default function mapSourceDTOToSource(sourceDto) {
   let source = new Source({ uid: sourceDto.uid, name: sourceDto.name });
 
+  if(sourceDto.lat) {
+    source.lat = sourceDto.lat;
+  }
+
+  if(sourceDto.lng) {
+    source.lng = sourceDto.lng;
+  }
+
   return source;
 }

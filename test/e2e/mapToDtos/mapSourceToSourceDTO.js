@@ -10,5 +10,13 @@ export default function mapSourceToSourceDTO(source) {
 
   let sourceDto = new SourceDTO({ uid, name: source.name });
 
+  if(source.lat) {
+    sourceDto.lat = source.lat;
+  }
+
+  if(source.lng) {
+    sourceDto.lng = source.lng;
+  }
+
   return sourceDto;
 }

@@ -21,11 +21,11 @@ router
 
     let uid = UID.create();
     let source = new Source({ uid, name: sourceDto.name });
-
+    
     if (sourceDto.lat) {
       source.lat = sourceDto.lat;
     }
-
+    
     if (sourceDto.lng) {
       source.lng = sourceDto.lng;
     }
