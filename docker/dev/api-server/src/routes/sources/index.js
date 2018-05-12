@@ -5,8 +5,8 @@ const UID = require("../../lib/uid/UID");
 const Source = require("../../dtos/Source");
 
 var sources = [
-  new Source(UID.create(), "NaturalSource"),
-  new Source(UID.create(), "GenuineSource"),
+  new Source({ uid: UID.create(), name: "NaturalSource", lat: 64.542610, lng: -18.596245 }),
+  new Source({ uid: UID.create(), name: "GenuineSource", lat: 58.191154, lng: -110.570265 }),
 ];
 
 router
@@ -19,7 +19,15 @@ router
     let sourceDto = req.body.data;
 
     let uid = UID.create();
-    let source = new Source(uid, sourceDto.name);
+    let source = new Source({ uid, name: sourceDto.name });
+
+    if(sourceDto.lat) {
+      source.lat = sourceDto.lat;
+    }
+
+    if(sourceDto.lng) {
+      source.lng = sourceDto.lng;
+    }
 
     sources.push(source);
 
