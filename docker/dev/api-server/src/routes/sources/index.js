@@ -3,6 +3,7 @@ const router = express.Router();
 
 const UID = require("../../lib/uid/UID");
 const Source = require("../../dtos/Source");
+const Coordinates = require("../../dtos/Coordinates");
 
 var sources = [
   new Source({ uid: UID.create(), name: "NaturalSource", lat: 64.542610, lng: -18.596245 }),
@@ -21,11 +22,11 @@ router
     let uid = UID.create();
     let source = new Source({ uid, name: sourceDto.name });
 
-    if(sourceDto.lat) {
+    if (sourceDto.lat) {
       source.lat = sourceDto.lat;
     }
 
-    if(sourceDto.lng) {
+    if (sourceDto.lng) {
       source.lng = sourceDto.lng;
     }
 
@@ -67,6 +68,20 @@ router
     sources = sources.filter(source => source.uid !== uid);
 
     res.send();
+  });
+
+// coordinates
+
+router
+  .get("/:uid/coordinates", function (req, res, next) {
+    let uid = req.params.uid;
+    let source = sources.find(source => source.uid === uid);
+
+    let coordinates = new Coordinates({ lat: source.lat, lng: source.lng });
+
+    res.send({
+      data: coordinates
+    });
   });
 
 module.exports = router;

@@ -29,29 +29,6 @@ suite('Source', function () {
     });
   });
 
-  test('Should insert a new source with lat and lng', function (done) {
-    const lat = chance.latitude();
-    const lng = chance.longitude();
-
-    const newSource = SourceFactory.create({
-      name: chance.word({ length: 20 }),
-      lat: lat,
-      lng: lng
-    });
-    
-    sourceService.insert(newSource, resSource => {    
-      assert(resSource.hasOwnProperty("lat"), "The response source has NOT the lat property");
-      assert(resSource.lat === lat, "The response source lat is NOT equal to lat");
-
-      assert(resSource.hasOwnProperty("lng"), "The response source has NOT the lng property");
-      assert(resSource.lng === lng, "The response source lng is NOT equal to lng");
-
-      done();
-    }, err => {
-      throw err;
-    });
-  });
-
   test('Should get the sources', function (done) {
     sourceService.get("", resSources => {
       source = resSources.find(resSource => resSource.name === SOURCE_NAME);
