@@ -13,13 +13,6 @@ export default async function fetchDeliveryMethod(address, options) {
     throw new PureSrcError(`Failed to connect to ${address}`);
   }
 
-  if (!fetchResponse.ok) {
-    throw new DeliveryError({
-      status: fetchResponse.status,
-      message: fetchResponse.statusText
-    });
-  }
-
   let fetchResponseBody = await fetchResponse.text();
 
   if (fetchResponseBody) {
@@ -29,8 +22,12 @@ export default async function fetchDeliveryMethod(address, options) {
       throw new Error("Error parsing response data");
     }
   }
-  else {
-    body = fetchResponseBody;
+  
+  if (!fetchResponse.ok) {
+    throw new DeliveryError({
+      status: fetchResponse.status,
+      body
+    });
   }
 
   let response = new FetchDeliveryResponse({ status: fetchResponse.status, body });

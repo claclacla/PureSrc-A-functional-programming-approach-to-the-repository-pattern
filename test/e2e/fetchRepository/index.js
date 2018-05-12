@@ -85,8 +85,8 @@ export default async function fetchTest() {
   }
 
   // Update a source coordinates by uid
-  
-  let newSourceCoordinates = new SourceCoordinates({lat: 47.007903, lng: 11.745257});
+
+  let newSourceCoordinates = new SourceCoordinates({ lat: 47.007903, lng: 11.745257 });
 
   try {
     await updateSourceCoordinatesByUidRequest({ uid: source.uid }, newSourceCoordinates);
@@ -96,7 +96,7 @@ export default async function fetchTest() {
   }
 
   // Retrieve a source coordinates by uid
-  
+
   try {
     let coordinates = await retrieveSourceCoordinatesByUidRequest(source.uid);
   } catch (error) {
@@ -110,6 +110,14 @@ export default async function fetchTest() {
     await sourceDeleteRequest({ uid: source.uid });
   } catch (error) {
     console.log("Source delete error");
+    return;
+  }
+
+  // Test 404 Not found response on retrieving the previous source object
+
+  try {
+    await sourceGetByUidRequest(source.uid);
+  } catch (error) {
     return;
   }
 }

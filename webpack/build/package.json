@@ -1,6 +1,6 @@
 {
 	"name": "pure-src",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "PureSrc: A functional programming approach to the repository pattern",
 	"main": "index.js",
 	"directories": {

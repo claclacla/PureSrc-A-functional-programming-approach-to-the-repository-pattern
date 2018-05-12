@@ -4,6 +4,7 @@ const router = express.Router();
 const UID = require("../../lib/uid/UID");
 const Source = require("../../dtos/Source");
 const Coordinates = require("../../dtos/Coordinates");
+const HttpError = require("../../errors/HttpError");
 
 var sources = [
   new Source({ uid: UID.create(), name: "NaturalSource", lat: 64.542610, lng: -18.596245 }),
@@ -39,6 +40,10 @@ router
   .get('/:uid', function (req, res, next) {
     let uid = req.params.uid;
     let source = sources.find(source => source.uid === uid);
+
+    if(!source) { 
+      return next(HttpError.NotFound());
+    }
 
     res.send({
       data: source
